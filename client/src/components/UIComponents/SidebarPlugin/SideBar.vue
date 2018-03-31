@@ -40,7 +40,7 @@
     props: {
       title: {
         type: String,
-        default: 'Vue LBD'
+        default: 'Make city safe'
       },
       backgroundColor: {
         type: String,
