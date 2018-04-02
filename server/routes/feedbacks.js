@@ -19,7 +19,7 @@ router.get('/feedbacks', (req, res) => {
 
 // Add new feedback
 router.post('/addFeedback', (req, res) => {
-    var db = req.db;
+    var db = req.db
 var title = req.body.title;
 var description = req.body.description;
 var incident = req.body.incident;

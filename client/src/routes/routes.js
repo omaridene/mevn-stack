@@ -14,6 +14,7 @@ import NewFeedBack from 'src/components/Dashboard/Views/NewFeedback.vue'
 import EditFeedBack from 'src/components/Dashboard/Views/EditFeedback.vue'
 import FeedbackDetail from 'src/components/Dashboard/Views/FeedBackDetail.vue'
 import test from 'src/components/Dashboard/Views/test.vue'
+import TableList from 'src/components/Dashboard/Views/TableList'
 
 const routes = [
   {
@@ -83,6 +84,10 @@ const routes = [
         path: 'notifications',
         name: 'Notifications',
         component: Notifications
+      }, {
+        path: 'TableList',
+        name: 'TableList',
+        component: TableList
       }
     ]
   },

@@ -36,7 +36,7 @@ delegations.push(population.populations[i].Gouvernerat)
        // console.log(population.populations[i])
   // }
 }
-res.send(delegations)
+res.json(delegations)
 
 })
 router.get('/delegation/:Gouvernerat', (req, res) => {
