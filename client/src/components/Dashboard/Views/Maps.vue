@@ -76,7 +76,7 @@
   }
 </style>-->
 <template>
-  <vue-google-heatmap :points="points" :width="500" :height="300" />
+  <vue-google-heatmap :points="points" :width="1180" :height="600" />
 </template>
 <script>
 import axios from 'axios'
