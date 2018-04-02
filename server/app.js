@@ -9,13 +9,18 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var feedbacks = require('./routes/feedbacks');
 var incidents = require('./routes/incidents');
-
+var Incident = require('./api/incident');
+var Delegation = require('./api/delegation');
 
 var app = express();
 const cors = require('cors')
 const morgan = require('morgan')
 
-
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/piStack');
@@ -46,6 +51,8 @@ app.use('/', feedbacks);
 app.use('/incidents', incidents);
 app.use('/index', index);
 app.use('/users', users);
+app.use('/incident', Incident);
+app.use('/delegation', Delegation);
 
 
 // catch 404 and forward to error handler
