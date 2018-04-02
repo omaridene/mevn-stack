@@ -9,6 +9,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var feedbacks = require('./routes/feedbacks');
 var incidents = require('./routes/incidents');
+var alerts = require('./routes/show_alerts_with_delgation');
 
 
 var app = express();
@@ -43,6 +44,8 @@ app.use(bodyParser.json())
 app.use(cors())
 
 app.use('/', feedbacks);
+app.use('/alerts', alerts);
+
 app.use('/incidents', incidents);
 app.use('/index', index);
 app.use('/users', users);
