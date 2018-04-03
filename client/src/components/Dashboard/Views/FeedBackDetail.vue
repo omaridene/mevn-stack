@@ -9,7 +9,7 @@
               <p class="card-category">{{date}}</p>
             </template>
             <div class="typo-line">
-              <h3><p class="category">Incident</p>{{incident}}</h3>
+              <h3><p class="category">Incident</p>{{incident.Title}}</h3>
             </div>
 
             <div class="typo-line">
@@ -37,12 +37,28 @@
                 <h5>Comments</h5>
 
                 <div class="alert alert-info" v-for="commentt in comments">
-                  <button type="button" aria-hidden="true" class="close">×</button>
+
                   <span >{{commentt.content}}</span>
+                  <td style="position: absolute;right:20px;top:10px;">
+                    <button type="button" class="btn-simple btn btn-xs btn-danger" >
+                      <i class="fa fa-edit"></i>
+                    </button>
+                    <button type="button" class="btn-simple btn btn-xs btn-danger"  @click="deleteC(commentt._id)" >
+                      <i class="fa fa-times"></i>
+                    </button>
+                  </td>
                 </div>
+
+
 
               </div>
             </div>
+
+
+
+
+
+
 
           </card>
 
@@ -98,6 +114,13 @@
           id: this.$route.params.id
         })
         this.comments = response.data.comments
+      },
+    async deleteC(idComment){
+    console.log(idComment)
+
+  const response = await FeedbacksService.deleteComment(idComment,this.$route.params.id);
+    this.getComments()
+
       }
     }
   }

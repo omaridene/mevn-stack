@@ -22,20 +22,25 @@ router.post('/addFeedback', (req, res) => {
     var db = req.db;
 var title = req.body.title;
 var description = req.body.description;
-var incident = req.body.incident;
 
-var new_feedback = new Feedback({
-    title: title,
-    description: description,
-    incident : incident
-})
 
-new_feedback.save(function (error) {
-    if (error) {
-        console.log(error)
-    }
-    res.send({
-        success: true
+Incident.findOne({Title:req.body.incident}, '', function (error, incident) {
+    if (error) { console.error(error); }
+
+
+    var new_feedback = new Feedback({
+        title: title,
+        description: description,
+        incident : incident
+    })
+
+    new_feedback.save(function (error) {
+        if (error) {
+            console.log(error)
+        }
+        res.send({
+            success: true
+        })
     })
 })
 })
@@ -124,7 +129,20 @@ Feedback.findById(req.params.id, 'title description comments', function (error, 
 })
 })
 
-
+// Delete a comment
+router.get('/feedback/:idF/deleteComment/:idC', (req, res) => {
+Feedback.findOne({'_id': req.params.idF}, function (err, feedback) {
+    feedback.comments.id(req.params.idC).remove();
+    feedback.save(function (error) {
+        if (error) {
+            console.log(error)
+        }
+        res.send({
+            success: true
+        })
+    })
+});
+})
 
 
 

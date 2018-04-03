@@ -45,7 +45,7 @@
       async getFeedbacks () {
         const response = await FeedbacksService.fetchFeedbacks()
         this.feedbacks = response.data.feedbacks
-      },
+  },
       async deleteFeedback (id) {
         const $this = this
         $this.$swal({

@@ -22,5 +22,8 @@ export default {
   },
   addCommentToFeedback (id, params) {
     return Api().put('/feedback/' + id + '/addComment', params)
+  },
+  deleteComment (idComment, idFeedback) {
+    return Api().get('feedback/' + idFeedback + '/deleteComment/' + idComment)
   }
 }

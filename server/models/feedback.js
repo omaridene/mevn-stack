@@ -4,26 +4,26 @@ var Incident = require('./incident')
 
 var addressSchema = new mongoose.Schema({
     place:{
-        type: String, required: true, minlength: 1, trim: true
+        type: String
     },
-    city:{type:String, required: true, minlength: 1, trim: true},
+    city:{type:String},
     coordinates: [Number],
     weight:Number,
 
 });
 var IncidentSchema = new mongoose.Schema({
     Title:{
-        type: String, required: true, minlength: 1, trim: true
+        type: String
     },
     Description:{
-        type: String, required: true, minlength: 1, trim: true
+        type: String
     },
     Date:{
         type:Date,default:Date.now
     },
     address: addressSchema,
     type:{
-        type: String, required: true, minlength: 1, trim: true
+        type: String
     }
 
     //,createdBy:{type:mongoose.Schema.Types.ObjectId,ref:'User'},
@@ -45,7 +45,7 @@ var FeedbackSchema = new Schema({
   description: String,
 date:{type:Date,default:Date.now()},
     comments : [commentSchema],
-    incident : String
+    incident : IncidentSchema
 
 
 });

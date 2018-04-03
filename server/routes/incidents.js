@@ -13,4 +13,14 @@ router.get('/getAllIncidents', (req, res) => {
 }).sort({_id:-1})
 })
 
+
+router.get('/getIncidentByTitle/:title', (req, res) => {
+    Incident.findOne({Title:req.params.title}, '', function (error, incident) {
+    if (error) { console.error(error); }
+    res.send({
+        incident: incident
+    })
+})
+})
+
 module.exports = router;
