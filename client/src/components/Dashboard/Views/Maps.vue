@@ -1,115 +1,99 @@
-<!--<template>
-  <gmap-map
-    id="map"
-    :center="center"
-    :zoom="13"
-    :options="options"
-    map-type-id="terrain"
-  >
-    <gmap-marker :position="center">
-    </gmap-marker>
-  </gmap-map>
-</template>
-<script>
-  import {API_KEY} from './Maps/API_KEY'
-  import Vue from 'vue'
-  import * as VueGoogleMaps from 'vue2-google-maps'
-  Vue.use(VueGoogleMaps, {
-    load: {
-      key: API_KEY
-    }
-  })
-  export default {
-    data () {
-      return {
-        center: {
-          lat: 40.748817,
-          lng: -73.985428
-        },
-        options: {
-          styles: [{
-            'featureType': 'water',
-            'stylers': [{'saturation': 43}, {'lightness': -11}, {'hue': '#0088ff'}]
-          }, {
-            'featureType': 'road',
-            'elementType': 'geometry.fill',
-            'stylers': [{'hue': '#ff0000'}, {'saturation': -100}, {'lightness': 99}]
-          }, {
-            'featureType': 'road',
-            'elementType': 'geometry.stroke',
-            'stylers': [{'color': '#808080'}, {'lightness': 54}]
-          }, {
-            'featureType': 'landscape.man_made',
-            'elementType': 'geometry.fill',
-            'stylers': [{'color': '#ece2d9'}]
-          }, {
-            'featureType': 'poi.park',
-            'elementType': 'geometry.fill',
-            'stylers': [{'color': '#ccdca1'}]
-          }, {
-            'featureType': 'road',
-            'elementType': 'labels.text.fill',
-            'stylers': [{'color': '#767676'}]
-          }, {
-            'featureType': 'road',
-            'elementType': 'labels.text.stroke',
-            'stylers': [{'color': '#ffffff'}]
-          }, {'featureType': 'poi', 'stylers': [{'visibility': 'off'}]}, {
-            'featureType': 'landscape.natural',
-            'elementType': 'geometry.fill',
-            'stylers': [{'visibility': 'on'}, {'color': '#b8cb93'}]
-          }, {'featureType': 'poi.park', 'stylers': [{'visibility': 'on'}]}, {
-            'featureType': 'poi.sports_complex',
-            'stylers': [{'visibility': 'on'}]
-          }, {'featureType': 'poi.medical', 'stylers': [{'visibility': 'on'}]}, {
-            'featureType': 'poi.business',
-            'stylers': [{'visibility': 'simplified'}]
-          }]
-        }
-      }
-    }
-  }
-</script>
-<style>
-  #map {
-    min-height: calc(100vh - 123px);
-  }
-</style>-->
 <template>
-  <vue-google-heatmap :points="points" :width="1180" :height="600" />
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8">
+          <vue-google-heatmap :points="points" :height="600"/>
+          <!-- :width="600" :height="600" -->
+        </div>
+        <div class="col-md-4">
+          <!-- <card>
+            <template slot="header">
+              <h5 class="title">Nearest incidents</h5>
+              <p class="category">Incidents near to that place</p>
+            </template> -->
+              
+                
+          <table>
+            <tr>
+              <td>Title</td>
+              <td>Description</td>
+              <td>Distance between</td>
+            </tr>
+            <tr v-for="i in incidents">
+              <td><router-link v-bind:to="{ name: 'incident Detail', params: { id: i._id } }">{{i.Title}}</router-link></td>
+              <td>{{ i.Description }}</td>
+              <td>{{ i.distance }}</td>
+            </tr>
+          </table>
+               
+              
+            <!-- <div class="footer">
+              <hr>
+              <div class="stats">
+                <i class="fa fa-history"></i> Updated 3 minutes ago
+              </div>
+            </div>
+          </card> -->
+        </div>
+    <!-- <div class="feedbacks">
+      <h1 class="table-wrap">Feedback</h1>
+      <div v-if="incidents.length > 0" class="table-wrap">
+        <table>
+          <tr>
+            <td width="300">Title</td>
+            <td width="650">Description</td>
+          </tr>
+          <tr v-for="i in incidents">
+            <td>{{i.Title}} </td>
+            <td>{{ i.Description }}</td>
+          </tr>
+        </table>
+      </div>
+    </div> -->
+    </div>
+  </div>
+</div>
 </template>
 <script>
+import ChartCard from 'src/components/UIComponents/Cards/ChartCard.vue'
+  import StatsCard from 'src/components/UIComponents/Cards/StatsCard.vue'
+  import Card from 'src/components/UIComponents/Cards/Card.vue'
+  import LTable from 'src/components/UIComponents/Table.vue'
+  import Checkbox from 'src/components/UIComponents/Inputs/Checkbox.vue'
 import axios from 'axios'
+import VueGoogleHeatmapVue from 'vue-google-heatmap/src/VueGoogleHeatmap.vue'
+import IncidentsService from '@/services/IncidentsService'
 export default {
   name: 'HelloWorld',
+  components: {
+      Checkbox,
+      Card,
+      LTable,
+      ChartCard,
+      StatsCard
+    },
   data () {
     return {
       points: [
+        // {lat: response.data[i].address.coordinates[0], lng: response.data[i].address.coordinates[1]}
         // {location: new VueGoogleHeatmap.maps.LatLng(37.782, -122.447), weight: 0.5},
-        // {location: new VueGoogleHeatmap.maps.LatLng(37.782, -122.443), weight: 2},
-        // {location: new VueGoogleHeatmap.maps.LatLng(37.782, -122.441), weight: 3},
-        // {location: new VueGoogleHeatmap.maps.LatLng(37.782, -122.439), weight: 2},
-        // {location: new VueGoogleHeatmap.maps.LatLng(37.782, -122.435), weight: 0.5},
-        // {location: new VueGoogleHeatmap.maps.LatLng(37.785, -122.447), weight: 3},
-        // {location: new VueGoogleHeatmap.maps.LatLng(37.785, -122.445), weight: 2},2
-        // {location: new VueGoogleHeatmap.maps.LatLng(37.785, -122.441), weight: 0.5},
-        // {location: new VueGoogleHeatmap.maps.LatLng(37.785, -122.437), weight: 2},
-        // {location: new VueGoogleHeatmap.maps.LatLng(37.785, -122.435), weight: 3}
-        // {lat: 36.425752, lng: 10.531763}
-        // {lat: 37.786564, lng: -122.440209},
-        // {lat: 37.786905, lng: -122.440270},
-        // {lat: 37.786956, lng: -122.440279},
-        // {lat: 37.800224, lng: -122.433520},
-        // {lat: 37.800155, lng: -122.434101},
-        // {lat: 37.800160, lng: -122.434430},
-        // {lat: 37.800378, lng: -122.434527},
-        // {lat: 37.800738, lng: -122.434598},
-        // {lat: 37.800938, lng: -122.434650},
-        // {lat: 37.801024, lng: -122.434889},
-        // {lat: 37.800955, lng: -122.435392},
         // {lat: 37.800886, lng: -122.435959}
-      ]
+      ],
+      
+        incidents: []
+      
     }
+  },
+  mounted () {
+      this.getNearest()
+    },
+  methods: {
+      async getNearest () {
+        const response = await IncidentsService.getNearestInidents()
+        this.incidents = response.data
+        console.log(response.data)
+      }
   },
   created () {
     axios.get(`http://localhost:8001/incident`)
@@ -117,7 +101,7 @@ export default {
         // JSON responses are automatically parsed.
         // console.log(response.data[0].address)
         for (let i = 0; i < response.data.length; i++) {
-          console.log(response.data[i].address.coordinates[0])
+          // console.log(response.data[i].address.coordinates[0])
           this.points.push({lat: response.data[i].address.coordinates[0], lng: response.data[i].address.coordinates[1]})
         }
         // console.log(this.points.length)
@@ -144,5 +128,39 @@ li {
 a {
   color: #42b983;
 }
+.table-wrap {
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+    alignment: center;
+  }
+  table th, table tr {
+    text-align: left;
+  }
+  table thead {
+    background: #f2f2f2;
+  }
+  table tr td {
+    padding: 10px;
+  }
+  table tr:nth-child(odd) {
+    background: #f2f2f2;
+  }
+  table tr:nth-child(1) {
+    background: #4d7ef7;
+    color: #fff;
+  }
+  a {
+    color: #4d7ef7;
+    text-decoration: none;
+  }
+  a.add_post_link {
+    background: #4d7ef7;
+    color: #fff;
+    padding: 10px 80px;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: bold;
+  }
 </style>
 

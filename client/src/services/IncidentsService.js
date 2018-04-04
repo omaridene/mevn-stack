@@ -6,5 +6,8 @@ export default {
   },
   getInidents () {
     return Api().get('incident')
+  },
+  getNearestInidents () {
+    return Api().get('incident/current')
   }
 }

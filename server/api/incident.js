@@ -5,7 +5,10 @@ var router = express.Router();
 var Incident = require('./../models/incident');
 var Delegation = require('./../models/delegation');
 var NodeGeocoder = require('node-geocoder');
- 
+var geodist = require('geodist');
+var geolocation = require('geolocation');
+const location = require('@derhuerst/location');
+
 var options = {
   provider: 'google',
  
@@ -29,6 +32,41 @@ router.get('/',function (req,res) {
         else
             res.json(incidents);
     })
+});
+router.get('/current', function(req, res) {
+    var lng;
+    var lat;
+    location((err, loc) => {
+        if (err) console.error(err)
+        else console.log(loc.latitude)
+        lng=loc.longitude;
+        lat=loc.latitude;
+    })
+    var array = [];
+    Incident.find(function (err,incidents) {
+        for (let i = 0; i < incidents.length; i++) {
+            // console.log(response.data[i].address.coordinates[0])
+            console.log({lat: incidents[i].address.coordinates[0], lng: incidents[i].address.coordinates[1]});
+            var dist = geodist({lat: 36.903533129999985, lon: 10.185571569999997,}, {lat: incidents[i].address.coordinates[0], lon: incidents[i].address.coordinates[1]})
+            console.log(dist) 
+            if (dist <= 40) {
+                inc={
+                    _id: incidents[i]._id,
+                    Title: incidents[i].Title,
+                    Description: incidents[i].Description,
+                    Lng: incidents[i].address.coordinates[1],
+                    lat: incidents[i].address.coordinates[0],
+                    type: incidents[i].type,
+                    distance: dist
+                }
+                array.push(inc);
+            }
+          }
+          console.log(array.length);
+          res.json(array);
+            //console.log(incidents.length);
+    })
+    
 });
 
 router.post('/',function(req,ress){
