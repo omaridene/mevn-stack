@@ -37,10 +37,9 @@
                 <h5>Comments</h5>
 
                 <div class="alert alert-info" v-for="commentt in comments">
-
                   <span >{{commentt.content}}</span>
                   <td style="position: absolute;right:20px;top:10px;">
-                    <button type="button" class="btn-simple btn btn-xs btn-danger" >
+                    <button type="button" class="btn-simple btn btn-xs btn-danger" @click="updateC(commentt._id)">
                       <i class="fa fa-edit"></i>
                     </button>
                     <button type="button" class="btn-simple btn btn-xs btn-danger"  @click="deleteC(commentt._id)" >
@@ -84,7 +83,8 @@
         date: '',
         incident: '',
         comment: '',
-        comments: []
+        comments: [],
+        addCommentControl:[]
       }
     },
     mounted () {
@@ -102,12 +102,30 @@
         this.incident=response.data.incident
       },
       async addComment () {
-        await FeedbacksService.addCommentToFeedback(this.$route.params.id,
+    const $this = this
+    this.addCommentControl = []
+    if (!this.comment) this.addCommentControl.push('Comment content required.')
+
+    if (this.addCommentControl.length <= 0) {
+      await FeedbacksService.addCommentToFeedback(this.$route.params.id,
         {
           content: this.comment
         }
         )
-        this.getComments()
+      $this.$swal(
+        'Great!',
+        `Your comment has been added!`,
+        'success'
+      )
+        this.comment=""
+        this.getComments()}
+        else{
+      $this.$swal({
+        type: 'error',
+        title: 'Oops...',
+        text: 'Can not add an empty comment!'
+      })
+    }
       },
       async getComments () {
         const response = await FeedbacksService.getFeedbackById({
@@ -116,12 +134,65 @@
         this.comments = response.data.comments
       },
     async deleteC(idComment){
-    console.log(idComment)
+    const $this = this
+    const idFeedBack = this.$route.params.id;
+    $this.$swal({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then(function (res) {
+      if (res.dismiss !== 'cancel') {
 
-  const response = await FeedbacksService.deleteComment(idComment,this.$route.params.id);
-    this.getComments()
+        FeedbacksService.deleteComment(idComment,idFeedBack);
 
       }
+      $this.comments=[]
+      $this.getComments()
+    })
+  },
+  async
+  updateC(idComment)
+  {
+    const idFeedBack = this.$route.params.id;
+    const response = await FeedbacksService.getCommentFromFeedback(idComment,idFeedBack)
+    var commentC= response.data.comment.content
+
+    const $this = this
+    $this.$swal({
+      title: 'Update your comment',
+      input: 'textarea',
+      inputValue: commentC,
+      showCancelButton: true
+    }).then(function (result) {
+      if (result) {
+        if (result.dismiss !== 'cancel')
+          if( result.value===""){
+            $this.$swal({
+              type: 'error',
+              title: 'Oops...',
+              text: 'Can not update an empty comment!',
+            })
+          }
+
+        else {
+            FeedbacksService.updateComment(idComment,idFeedBack,result.value)
+          }
+
+      }
+      $this.comments=[]
+      $this.getComments()
+
+    });
+  }
+
+
+
+
+
     }
   }
 

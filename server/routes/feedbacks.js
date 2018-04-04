@@ -146,4 +146,34 @@ Feedback.findOne({'_id': req.params.idF}, function (err, feedback) {
 
 
 
+
+// Get a comment from feedbacl
+router.get('/feedback/:idF/getComment/:idC', (req, res) => {
+    Feedback.findOne({'_id': req.params.idF}, function (err, feedback) {
+    var comment=feedback.comments.id(req.params.idC);
+    res.send({
+        comment: comment
+    })
+});
+})
+
+
+
+// Update a comment
+router.get('/feedback/:idF/updateComment/:idC/:content', (req, res) => {
+    Feedback.findOne({'_id': req.params.idF}, function (err, feedback) {
+    feedback.comments.id(req.params.idC).content=req.params.content;
+    feedback.save(function (error) {
+        if (error) {
+            console.log(error)
+        }
+        res.send({
+            success: true
+        })
+    })
+});
+})
+
+
+
 module.exports = router;

@@ -25,5 +25,11 @@ export default {
   },
   deleteComment (idComment, idFeedback) {
     return Api().get('feedback/' + idFeedback + '/deleteComment/' + idComment)
+  },
+getCommentFromFeedback (idComment, idFeedback) {
+  return Api().get('feedback/' + idFeedback + '/getComment/' + idComment)
+},
+  updateComment (idComment, idFeedback,content) {
+    return Api().get('feedback/' + idFeedback + '/updateComment/' + idComment+'/'+content)
   }
 }
