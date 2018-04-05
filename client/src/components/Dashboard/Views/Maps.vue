@@ -13,7 +13,7 @@
               <p class="category">Incidents near to that place</p>
             </template> -->
               
-                
+
           <table>
             <tr>
               <td>Title</td>
@@ -56,6 +56,12 @@
 </div>
 </template>
 <script>
+import {API_KEY} from './Maps/API_KEY'
+  import Vue from 'vue'
+  import VueGoogleHeatmap from 'vue-google-heatmap'
+ Vue.use(VueGoogleHeatmap, {
+  apiKey: API_KEY
+})
 import ChartCard from 'src/components/UIComponents/Cards/ChartCard.vue'
   import StatsCard from 'src/components/UIComponents/Cards/StatsCard.vue'
   import Card from 'src/components/UIComponents/Cards/Card.vue'

@@ -33,6 +33,23 @@ router.get('/',function (req,res) {
             res.json(incidents);
     })
 });
+router.get('/current/:id',function (req,res) {
+    var id=req.params.id;
+    Incident.findById(id).exec(function (err,incidents) {
+        if(err) {
+            res.send(err)
+            console.log('err')
+        }
+        if(!incidents) {
+            res.status(404).send();
+            console.log('todos')
+        }
+        else {
+            res.json(incidents);
+            console.log('json')
+        }
+    })
+ });
 router.get('/current', function(req, res) {
     var lng;
     var lat;
