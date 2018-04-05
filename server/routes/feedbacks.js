@@ -51,7 +51,7 @@ Incident.findOne({Title:req.body.incident}, '', function (error, incident) {
 
 // Fetch all feedbacks
 router.get('/getAllFeedbacks', (req, res) => {
-    Feedback.find({}, 'title description', function (error, feedbacks) {
+    Feedback.find({},'', function (error, feedbacks) {
     if (error) { console.error(error); }
     res.send({
         feedbacks: feedbacks
@@ -105,6 +105,27 @@ Feedback.remove({
     })
 })
 })
+
+
+
+
+// Get the last feedback
+router.get('/getLastFeedback', (req, res) => {
+    Feedback.find({}, '', function (error, feedbacks) {
+    if (error) { console.error(error); }
+    res.send({
+        feedbacks: feedbacks
+    })
+}).sort({date:-1}).limit(1)
+})
+
+
+
+
+
+
+
+
 
 
 // Add new comment

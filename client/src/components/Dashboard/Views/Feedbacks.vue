@@ -1,11 +1,50 @@
 <template>
   <div class="feedbacks">
     <h1 class="table-wrap">Feedback</h1>
+
+
     <div v-if="feedbacks.length > 0" class="table-wrap">
-      <div>
-        <router-link v-bind:to="{ name: 'New Feedback' }" class="">Add Feedback</router-link>
+      <div style="display: flex;flex-wrap: wrap;align-items: center;justify-content: center;margin-top:30px ">
+        <router-link v-bind:to="{ name: 'New Feedback' }" class="add_post_link">Add Feedback</router-link>
       </div>
-      <table>
+    <div style="display: flex;flex-wrap: wrap;align-items: center;justify-content: center;margin-top:30px ">
+      <div  style="width: 400px">
+        <stats-card>
+          <div slot="header" class="icon-warning">
+            <i class="fa fa-calendar-plus-o" ></i>
+
+          </div>
+          <div slot="content">
+            <p class="card-category">The last feedback</p>
+            <h4 class="card-title">{{lastFeedback.title}}</h4>
+          </div>
+          <div slot="footer">
+                <router-link v-bind:to="{ name: 'Feedback Detail', params: { id: lastFeedback._id } }"><i class="fa fa-angle-right"></i>Go to ..
+                </router-link>
+          </div>
+        </stats-card>
+      </div>
+
+      <div  style="width: 400px;margin-left:30px">
+        <stats-card>
+          <div slot="header" class="icon-success">
+            <i class="fa fa-comments"></i>
+          </div>
+          <div slot="content">
+            <p class="card-category">The most commented feedback</p>
+            <h4 class="card-title">{{mostCommentedFeedback.title}}</h4>
+          </div>
+          <div slot="footer">
+            <router-link v-bind:to="{ name: 'Feedback Detail', params: { id: mostCommentedFeedback._id } }"><i class="fa fa-angle-right"></i>Go to ..
+            </router-link>
+          </div>
+        </stats-card>
+      </div>
+    </div>
+
+
+
+      <table style="margin-top: 30px">
         <tr>
           <td width="300">Title</td>
           <td width="650">Description</td>
@@ -37,15 +76,26 @@
 <script>
   import FeedbacksService from '@/services/FeedbacksService'
 
+  import ChartCard from 'src/components/UIComponents/Cards/ChartCard.vue'
+  import StatsCard from 'src/components/UIComponents/Cards/StatsCard.vue'
+  import Card from 'src/components/UIComponents/Cards/Card.vue'
+  import LTable from 'src/components/UIComponents/Table.vue'
+  import Checkbox from 'src/components/UIComponents/Inputs/Checkbox.vue'
   export default {
+    components: {
+      StatsCard
+    },
     name: 'feedbacks',
     data() {
       return {
-        feedbacks: []
+        feedbacks: [],
+        lastFeedback: '',
+        mostCommentedFeedback: ''
       }
     },
     mounted() {
-      this.getFeedbacks()
+      this.getFeedbacks(),
+        this.getLastFeedback()
     },
     methods: {
       async getFeedbacks()
@@ -53,8 +103,19 @@
     const response = await
     FeedbacksService.fetchFeedbacks()
     this.feedbacks = response.data.feedbacks
-  }
-  ,
+    var mostCommentedFeedback = this.feedbacks[0]
+    for (var i=1;i<this.feedbacks.length;i++){
+    if(this.feedbacks[i].comments.length>mostCommentedFeedback.comments.length)
+    mostCommentedFeedback = this.feedbacks[i]
+    }
+    this.mostCommentedFeedback=mostCommentedFeedback
+  },
+  async getLastFeedback()
+  {
+    const response = await
+    FeedbacksService.fetchLastFeedback()
+    this.lastFeedback = response.data.feedbacks[0]
+  },
   async
   deleteFeedback(id)
   {

@@ -4,7 +4,9 @@ export default {
   fetchFeedbacks () {
     return Api().get('getAllFeedbacks')
   },
-
+  fetchLastFeedback () {
+    return Api().get('getLastFeedback')
+  },
   addFeedback (params) {
     return Api().post('addFeedback', params)
   },
