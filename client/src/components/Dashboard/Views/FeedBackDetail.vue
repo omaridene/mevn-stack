@@ -53,7 +53,7 @@
 
               </div>
             </div>
-            
+
             <gmap-map
               id="map"
               :center="center"
