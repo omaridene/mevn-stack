@@ -5,7 +5,7 @@ var Incident = require("../models/incident");
 
 /* GET home page. */
 
-router.get('/feedbacks', (req, res) => {
+router.get('feedbacks', (req, res) => {
   res.send(
     [{
       title: "Hello feedbacks!",
@@ -71,6 +71,32 @@ Feedback.findById(req.params.id, 'title description date incident comments', fun
     res.send(feedback)
 })
 })
+
+// Get long and alt of incident of feedback
+router.get('/feedback/incident/:place', (req, res) => {
+var NodeGeocoder = require('node-geocoder');
+var options = {
+    provider: 'google',
+    // Optional depending on the providers
+    httpAdapter: 'https', // Default
+    apiKey: 'AIzaSyB6kQ8I9KIPciT0EXioBjk91Nl_iQA6gQ8', // for Mapquest, OpenCage, Google Premier
+    formatter: null         // 'gpx', 'string', ...
+};
+var geocoder = NodeGeocoder(options);
+
+// Or using Promise
+geocoder.geocode({address: req.params.place}, function(req, resGeo) {
+
+    res.send({
+        longitude: resGeo[0].longitude,
+        latitude : resGeo[0].latitude
+    })
+
+});
+})
+
+
+
 
 // Update a feedback
 router.put('/feedback/:id', (req, res) => {

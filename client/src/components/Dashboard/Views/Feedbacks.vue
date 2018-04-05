@@ -108,7 +108,7 @@
     if(this.feedbacks[i].comments.length>mostCommentedFeedback.comments.length)
     mostCommentedFeedback = this.feedbacks[i]
     }
-    this.mostCommentedFeedback=mostCommentedFeedback
+    this.mostCommentedFeedback = mostCommentedFeedback
   },
   async getLastFeedback()
   {

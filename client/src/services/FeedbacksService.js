@@ -7,6 +7,9 @@ export default {
   fetchLastFeedback () {
     return Api().get('getLastFeedback')
   },
+  getFeedbackIncidentLatLong (place) {
+    return Api().get('/feedback/incident/'+place)
+  },
   addFeedback (params) {
     return Api().post('addFeedback', params)
   },
