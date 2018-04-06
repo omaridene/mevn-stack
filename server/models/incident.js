@@ -12,13 +12,13 @@ var addressSchema = new mongoose.Schema({
     
 });
 var IncidentSchema = new mongoose.Schema({
-    Title:{
+    title:{
         type: String, required: true, minlength: 1, trim: true
     },
-    Description:{
+    description:{
         type: String, required: true, minlength: 1, trim: true
     },
-    Date:{
+    date:{
         type:Date,default:Date.now
     },
     address: addressSchema,

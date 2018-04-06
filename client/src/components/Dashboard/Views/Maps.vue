@@ -1,4 +1,4 @@
-<template>
+<!--<template>
   <gmap-map
     id="map"
     :center="center"
@@ -74,4 +74,75 @@
   #map {
     min-height: calc(100vh - 123px);
   }
+</style>-->
+<template>
+  <vue-google-heatmap :points="points" :width="1180" :height="600" />
+</template>
+<script>
+import axios from 'axios'
+export default {
+  name: 'HelloWorld',
+  data () {
+    return {
+      points: [
+        // {location: new VueGoogleHeatmap.maps.LatLng(37.782, -122.447), weight: 0.5},
+        // {location: new VueGoogleHeatmap.maps.LatLng(37.782, -122.443), weight: 2},
+        // {location: new VueGoogleHeatmap.maps.LatLng(37.782, -122.441), weight: 3},
+        // {location: new VueGoogleHeatmap.maps.LatLng(37.782, -122.439), weight: 2},
+        // {location: new VueGoogleHeatmap.maps.LatLng(37.782, -122.435), weight: 0.5},
+        // {location: new VueGoogleHeatmap.maps.LatLng(37.785, -122.447), weight: 3},
+        // {location: new VueGoogleHeatmap.maps.LatLng(37.785, -122.445), weight: 2},2
+        // {location: new VueGoogleHeatmap.maps.LatLng(37.785, -122.441), weight: 0.5},
+        // {location: new VueGoogleHeatmap.maps.LatLng(37.785, -122.437), weight: 2},
+        // {location: new VueGoogleHeatmap.maps.LatLng(37.785, -122.435), weight: 3}
+        // {lat: 36.425752, lng: 10.531763}
+        // {lat: 37.786564, lng: -122.440209},
+        // {lat: 37.786905, lng: -122.440270},
+        // {lat: 37.786956, lng: -122.440279},
+        // {lat: 37.800224, lng: -122.433520},
+        // {lat: 37.800155, lng: -122.434101},
+        // {lat: 37.800160, lng: -122.434430},
+        // {lat: 37.800378, lng: -122.434527},
+        // {lat: 37.800738, lng: -122.434598},
+        // {lat: 37.800938, lng: -122.434650},
+        // {lat: 37.801024, lng: -122.434889},
+        // {lat: 37.800955, lng: -122.435392},
+        // {lat: 37.800886, lng: -122.435959}
+      ]
+    }
+  },
+  created () {
+    axios.get(`http://localhost:8001/incident`)
+      .then(response => {
+        // JSON responses are automatically parsed.
+        // console.log(response.data[0].address)
+        for (let i = 0; i < response.data.length; i++) {
+          console.log(response.data[i].address.coordinates[0])
+          this.points.push({lat: response.data[i].address.coordinates[0], lng: response.data[i].address.coordinates[1]})
+        }
+        // console.log(this.points.length)
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
+  }
+}
+</script>
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+h1, h2 {
+  font-weight: normal;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+a {
+  color: #42b983;
+}
 </style>
+

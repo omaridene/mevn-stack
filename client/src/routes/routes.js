@@ -10,9 +10,11 @@ import Typography from 'src/components/Dashboard/Views/Statistics.vue'
 import Icons from 'src/components/Dashboard/Views/Icons.vue'
 import Maps from 'src/components/Dashboard/Views/Maps.vue'
 import Notifications from 'src/components/Dashboard/Views/Notifications.vue'
+import NewIncident from 'src/components/Dashboard/Views/addIncident.vue'
 import NewFeedBack from 'src/components/Dashboard/Views/NewFeedback.vue'
 import EditFeedBack from 'src/components/Dashboard/Views/EditFeedback.vue'
 import FeedbackDetail from 'src/components/Dashboard/Views/FeedBackDetail.vue'
+import IncidentDetail from 'src/components/Dashboard/Views/IncidentDetail.vue'
 import test from 'src/components/Dashboard/Views/test.vue'
 
 const routes = [
@@ -83,7 +85,20 @@ const routes = [
         path: 'notifications',
         name: 'Notifications',
         component: Notifications
+      },
+      {
+        path: 'notifications/new',
+        name: 'New Incident',
+        component: NewIncident
+      },
+      {
+        path: 'notifications/detail/:id',
+        name: 'Incident Detail',
+        component: IncidentDetail
+
       }
+      
+
     ]
   },
   { path: '*',

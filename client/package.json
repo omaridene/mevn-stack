@@ -20,16 +20,19 @@
     "chartist": "^0.11.0",
     "cors": "^2.8.4",
     "es6-promise": "^4.1.1",
+    "express": "^4.16.3",
     "google-maps": "^3.2.1",
     "morgan": "^1.9.0",
+    "pusher": "^1.5.1",
+    "pusher-js": "^4.2.2",
     "v-tooltip": "^2.0.0-rc.1",
     "vue": "^2.5.2",
     "vue-clickaway": "^2.1.0",
-    "vue-notifyjs": "^0.2.0",
+    "vue-google-heatmap": "^1.0.1",
     "vue-router": "^3.0.1",
     "vue-sweetalert2": "^1.2.4",
     "vue2-google-maps": "^0.8.4",
-    "vuejs-dialog": "^0.9.0"
+    "vuejs-dialog": "^0.9.0","socket.io": "^2.0.4"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

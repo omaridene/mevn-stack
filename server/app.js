@@ -4,17 +4,16 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var Pusher = require('pusher');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var feedbacks = require('./routes/feedbacks');
 var incidents = require('./routes/incidents');
-
+var io = require('socket.io');
 
 var app = express();
 const cors = require('cors')
 const morgan = require('morgan')
-
 
 
 var mongoose = require('mongoose');
@@ -47,6 +46,15 @@ app.use('/incidents', incidents);
 app.use('/index', index);
 app.use('/users', users);
 
+/*
+* Initialise Pusher
+*/
+const pusher = new Pusher({
+  appId:'504320',
+  key:'9fb83aabdb44fe9586d1',
+  secret:'5c7cb4607042109ddccb',
+  cluster:'eu'
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -54,6 +62,7 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
+
 
 // error handler
 app.use(function(err, req, res, next) {
