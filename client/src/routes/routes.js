@@ -6,7 +6,7 @@ import NotFound from '../components/GeneralViews/NotFoundPage.vue'
 import Overview from 'src/components/Dashboard/Views/Home.vue'
 import UserProfile from 'src/components/Dashboard/Views/UserProfile.vue'
 import Feedbacks from 'src/components/Dashboard/Views/Feedbacks.vue'
-import Typography from 'src/components/Dashboard/Views/Statistics.vue'
+import Statistics from 'src/components/Dashboard/Views/Statistics.vue'
 import Icons from 'src/components/Dashboard/Views/Icons.vue'
 import Maps from 'src/components/Dashboard/Views/Maps.vue'
 import Notifications from 'src/components/Dashboard/Views/Notifications.vue'
@@ -67,8 +67,8 @@ const routes = [
       },
       {
         path: 'statistics',
-        name: 'Typography',
-        component: Typography
+        name: 'statistics',
+        component: Statistics
       },
       {
         path: 'icons',

@@ -4,6 +4,9 @@ export default {
   fetchIncidents () {
     return Api().get('incidents/getAllIncidents')
   },
+  getalerts () {
+    return Api().get('alerts/')
+  },
   getgouvernerat () {
     return Api().get('alerts/Gouvernerat')
   },

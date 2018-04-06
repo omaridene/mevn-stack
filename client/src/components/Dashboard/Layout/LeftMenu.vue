@@ -14,9 +14,9 @@
         <i class="nc-icon nc-notes"></i>
         <p>Feedbacks</p>
       </sidebar-link>
-      <sidebar-link to="statistics">
+      <sidebar-link to="TableList">
         <i class="nc-icon nc-paper-2"></i>
-        <p>Statistics</p>
+        <p>Incidents history </p>
       </sidebar-link>
       <sidebar-link to="maps">
         <i class="nc-icon nc-pin-3"></i>
