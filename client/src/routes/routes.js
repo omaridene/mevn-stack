@@ -14,6 +14,7 @@ import NewFeedBack from 'src/components/Dashboard/Views/NewFeedback.vue'
 import EditFeedBack from 'src/components/Dashboard/Views/EditFeedback.vue'
 import FeedbackDetail from 'src/components/Dashboard/Views/FeedBackDetail.vue'
 import IncidentDet from 'src/components/Dashboard/Views/IncidentDet.vue'
+import MyAlerts from 'src/components/Dashboard/Views/MyAlerts.vue'
 import test from 'src/components/Dashboard/Views/test.vue'
 
 const routes = [
@@ -64,6 +65,12 @@ const routes = [
         path: 'maps/detail/:id',
         name: 'incident Detail',
         component: IncidentDet
+
+      },
+      {
+        path: 'myalerts',
+        name: 'my alerts',
+        component: MyAlerts
 
       },
       {

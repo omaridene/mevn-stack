@@ -34,6 +34,11 @@
               Log out
             </a>
           </li>
+          <li class="nav-item">
+            <a href="/#/myalerts" class="nav-link">
+              My alerts
+            </a>
+          </li>
         </ul>
       </div>
     </div>

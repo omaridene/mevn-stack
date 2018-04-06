@@ -50,21 +50,53 @@ router.get('/current/:id',function (req,res) {
         }
     })
  });
+ router.delete('/delete/:id', (req, res) => {
+    
+Incident.remove({
+    _id: req.params.id
+}, function(err, incident){
+    if (err)
+        res.send(err)
+    res.send({
+        success: true
+    })
+})
+});
+ router.get('/own/:userID', function (req, res, next) {
+        Incident
+            .find({createdBy:req.params.userID})
+            .populate('user','_id')
+            .exec(function (err, incidents) {
+                if (err) {
+                    res.send(err)
+                }
+                if (!incidents) {
+                    res.status(404).send();
+                }
+                else {
+                    //replace ids with emails
+                    res.json(incidents);
+                }
+    
+            });
+    });
 router.get('/current', function(req, res) {
     var lng;
     var lat;
     location((err, loc) => {
         if (err) console.error(err)
-        else console.log(loc.latitude)
-        lng=loc.longitude;
-        lat=loc.latitude;
-    })
-    var array = [];
+        else {
+        
+        lng=loc.longitude
+        lat=loc.latitude
+        console.log(lng+"  /  "+lat)
+        var array = [];
     Incident.find(function (err,incidents) {
         for (let i = 0; i < incidents.length; i++) {
+            // console.log(lat+"  /  "+lng)
             // console.log(response.data[i].address.coordinates[0])
-            console.log({lat: incidents[i].address.coordinates[0], lng: incidents[i].address.coordinates[1]});
-            var dist = geodist({lat: 36.903533129999985, lon: 10.185571569999997,}, {lat: incidents[i].address.coordinates[0], lon: incidents[i].address.coordinates[1]})
+            // console.log({lat: incidents[i].address.coordinates[0], lng: incidents[i].address.coordinates[1]});
+            var dist = geodist({lat: lat, lon: lng,}, {lat: incidents[i].address.coordinates[0], lon: incidents[i].address.coordinates[1]})
             console.log(dist) 
             if (dist <= 40) {
                 inc={
@@ -74,6 +106,7 @@ router.get('/current', function(req, res) {
                     Lng: incidents[i].address.coordinates[1],
                     lat: incidents[i].address.coordinates[0],
                     type: incidents[i].type,
+                    date: incidents[i].Date,
                     distance: dist
                 }
                 array.push(inc);
@@ -83,6 +116,9 @@ router.get('/current', function(req, res) {
           res.json(array);
             //console.log(incidents.length);
     })
+    }
+    })
+    
     
 });
 

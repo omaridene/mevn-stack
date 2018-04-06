@@ -12,5 +12,11 @@ export default {
   },
   getIncidentById (params) {
     return Api().get('incident/current/' + params.id)
-  }
+  },
+  fetchByUser (params) {
+    return Api().get('incident/own/' + params.id)
+  },
+  deleteAlertById (id) {
+    return Api().delete('incident/delete/' + id)
+  },
 }

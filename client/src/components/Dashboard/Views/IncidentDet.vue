@@ -1,48 +1,79 @@
 <template>
 <div class="content">
-  <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-8">
-  <gmap-map
-    id="map"
-    :center="center"
-    :zoom="8"
-    :options="options"
-    map-type-id="roadmap"
-  >
-    <gmap-marker
-      :key="index"
-      v-for="(m, index) in markers"
-      :position="m.position"
-      :clickable="true"
-      :draggable="true"
-      @click="center=m.position"
-    ></gmap-marker>
-  </gmap-map>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <!-- <gmap-map
+                    id="map"
+                    :center="center"
+                    :zoom="8"
+                    :options="options"
+                    map-type-id="roadmap"
+                >
+                    <gmap-marker
+                    :key="index"
+                    v-for="(m, index) in markers"
+                    :position="m.position"
+                    :clickable="true"
+                    :draggable="true"
+                    @click="center=m.position"
+                    ></gmap-marker>
+                </gmap-map> -->
+            </div>
+            <div class="col-md-4">
+            <card>
+                <template slot="header">
+                <h4 class="card-title">{{title}}</h4>
+                <p class="card-category">{{date}}</p>
+                </template>
+                <div class="typo-line">
+                <h3><p class="category">DESCRIPTION</p>{{description}}</h3>
+                </div>
+                <div class="typo-line">
+                <h6><p class="category">Place</p>{{place}}</h6>
+                </div>
+                <div class="typo-line">
+                <h6><p class="category">City</p>{{city}}</h6>
+                </div>
+                <div class="typo-line">
+                <h6><p class="category">Type</p>{{type}}</h6>
+                </div>
+            </card>
+        </div>
         </div>
     </div>
-    </div>
-    </div>
+</div>
 </template>
 <script>
-  import {API_KEY} from './Maps/API_KEY'
-  import Vue from 'vue'
-  import * as VueGoogleMaps from 'vue2-google-maps'
   import IncidentsService from '@/services/IncidentsService'
-  Vue.use(VueGoogleMaps, {
-    load: {
-      key: API_KEY
-    }
-  })
+  import Card from 'src/components/UIComponents/Cards/Card.vue'
+//   import {API_KEY} from './Maps/API_KEY'
+//   import Vue from 'vue'
+//   import * as VueGoogleMaps from 'vue2-google-maps'
+
+
+//   Vue.use(VueGoogleMaps, {
+//     load: {
+//       key: API_KEY
+//     }
+//   })
   export default {
+      components: {
+      Card
+    },
     data () {
       return {
         center: {
           lat: 36.900,
           lng: 10.186
         },
-        markers: []
-        ,
+        markers: [],
+        title: '',
+        description: '',
+        date: '',
+        type: '',
+        place: '',
+        city: '',
         options: {
           styles: [{
             'featureType': 'water',
@@ -94,6 +125,12 @@
           id: this.$route.params.id
         })
         console.log(response.data.address.coordinates[0]+" / "+response.data.address.coordinates[1])
+        this.title = response.data.Title
+        this.description = response.data.Description
+        this.date = response.data.Date
+        this.type = response.data.type
+        this.place = response.data.address.place
+        this.city = response.data.address.city
         this.markers.push({position: {lat: response.data.address.coordinates[0], lng: response.data.address.coordinates[1]}})
         
       }
