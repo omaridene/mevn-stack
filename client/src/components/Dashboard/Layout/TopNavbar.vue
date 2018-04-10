@@ -28,10 +28,15 @@
               Account
             </a>
           </li>
-
-          <li class="nav-item">
-            <a href="#" class="nav-link">
+          
+          <li class="nav-item" v-if="token != null">
+            <a  @click="onLogout" class="nav-link">
               Log out
+            </a>
+          </li>
+          <li class="nav-item" v-if="token ===null">
+            <a   class="nav-link">
+              Login
             </a>
           </li>
           <li class="nav-item">
@@ -45,6 +50,8 @@
   </nav>
 </template>
 <script>
+    import axios from 'axios'
+
   export default {
     computed: {
       routeName () {
@@ -53,11 +60,24 @@
       }
     },
     data () {
-      return {
+      return { 
+        token: localStorage.getItem('token'),
+        user: JSON.parse(localStorage.getItem('user')),
         activeNotifications: false
       }
     },
     methods: {
+      onLogout () {
+      const BASE_URL = 'http://localhost:8001'
+      const url = `${BASE_URL}/user/logout`
+      axios.delete(url, {headers: {Authorization: localStorage.getItem('token')}}).then((response) => {
+        localStorage.removeItem('user')
+        localStorage.removeItem('token')
+        this.$router.push('/login')
+      }).catch(error => {
+        console.log(error)
+      })
+    },
       capitalizeFirstLetter (string) {
         return string.charAt(0).toUpperCase() + string.slice(1)
       },

@@ -2,6 +2,7 @@
 <div class="content">
   <div class="container-fluid">
     <div class="row">
+      
         <div class="col-md-7">
           <vue-google-heatmap :points="points" />
           <!-- :width="600" :height="600" -->
@@ -91,7 +92,8 @@ export default {
         // {lat: 37.800886, lng: -122.435959}
       ],
       
-        incidents: []
+        incidents: [],
+        token: localStorage.getItem("token")
       
     }
   },
