@@ -3,8 +3,8 @@ import VueRouter from 'vue-router'
 import App from './App.vue'
 import VueSweetalert2 from 'vue-sweetalert2'
 import VueAlert from '@vuejs-pt/vue-alert'
+import VueMoment from 'vue-moment'
 
- 
 
 
 // LightBootstrap plugin
@@ -21,6 +21,7 @@ Vue.use(VueRouter)
 Vue.use(LightBootstrap)
 Vue.use(VueSweetalert2)
 Vue.use(VueAlert)
+Vue.use(VueMoment)
 // configure router
 const router = new VueRouter({
   routes, // short for routes: routes

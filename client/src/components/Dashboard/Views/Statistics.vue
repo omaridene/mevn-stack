@@ -3,16 +3,46 @@
   <div class="container">
     
     <h5 class="uppercase">List of reported incidents</h5>
-   
-    <div class="incident" v-for="i in incidents">
+  
 
-      <div class="panel panel-danger">
-          <div class="panel-heading"><strong>Incodent Title: </strong> {{ i.title }}</div>
-          <div class="panel-body"><strong>Incodent description: </strong> {{ i.description }}</div>
-          <div class="panel-body"><strong>Date of report: </strong> {{ i.date }}</div>
-          <div class="b"><router-link v-bind:to="{ name: 'Incident Detail', params: { id: i._id } }">More details</router-link> </div>
-        </div>
-    </div>
+    <div class="time-entries">
+      <p v-if="!incidents.length"><strong>No report entries yet</strong></p>
+
+      <div class="list-group">
+
+        <a class="list-group-item" v-for="i in incidents">
+          <div class="row">
+
+            <div class="col-sm-2 user-details">
+             
+              <p class="text-center">
+                <strong>
+                  <br> <br>   Titre:<br> <router-link v-bind:to="{ name: 'Incident Detail', params: { id: i._id } }">{{ i.title }}</router-link> 
+                </strong>
+              </p>
+            </div>
+
+            <div class="col-sm-2 text-center time-block">
+              <h3 class="list-group-item-text total-time">
+                <i class="glyphicon glyphicon-time"></i> 
+                <span>{{ i.date | moment("from", "now", true) }}</span>
+              </h3>
+              <p class="label label-primary text-center">
+                <i class="glyphicon glyphicon-calendar"></i> 
+                {{ i.date | moment("dddd, MMMM Do YYYY") }}
+                
+              </p>
+            </div>
+
+            <div class="col-sm-7 comment-section">
+             <p><strong>Description:</strong> {{i.description}}</p>
+            </div>
+          </div>        
+        </a>
+
+      </div>
+    </div>    
+  
     
 
     <div class="incident-form" >
@@ -42,7 +72,8 @@
         incidents: [],
         title: '',
         description: '',
-        timer: ''
+        timer: '',
+        totalTime: '',
         
       }
     },
@@ -78,6 +109,7 @@ this.timer = setInterval(this.getIncidents, 30)
         
     
   },
+  
   subscribe () {
       let pusher = new Pusher('9fb83aabdb44fe9586d1', { cluster: 'eu' })
       pusher.subscribe('addIncident')
@@ -131,6 +163,23 @@ h5 {
   padding-left: 150px;
   padding-right: 150px;
 }
+.avatar {
+    height: 75px;
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .user-details {
+    background-color: #f5f5f5;
+    border-right: 1px solid #ddd;
+    margin: -10px 0;
+  }
+  .time-block {
+    padding: 10px;
+  }
+  .comment-section {
+    padding: 20px;
+  }
 </style>
 
 
