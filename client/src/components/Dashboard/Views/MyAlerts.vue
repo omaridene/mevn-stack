@@ -46,7 +46,7 @@
   </div>
             </div>
             <div class="col-md-6">
-                <!-- <gmap-map
+                <gmap-map
                     id="map"
                     :center="center"
                     :zoom="8"
@@ -58,11 +58,13 @@
                     :key="index"
                     v-for="(m, index) in markers"
                     :position="m.position"
+                    
+
                     :clickable="true"
-                    :draggable="true"
+                    :draggable="false"
                     @click="center=m.position"
                     ></gmap-marker>
-                </gmap-map> -->
+                </gmap-map>
             </div>
             
         </div></div></div>
@@ -73,14 +75,14 @@
 import IncidentsService from '@/services/IncidentsService'
   import {API_KEY} from './Maps/API_KEY'
   import Vue from 'vue'
-//   import * as VueGoogleMaps from 'vue2-google-maps'
+  import * as VueGoogleMaps from 'vue2-google-maps'
 
 
-//   Vue.use(VueGoogleMaps, {
-//     load: {
-//       key: API_KEY
-//     }
-//   })
+  Vue.use(VueGoogleMaps, {
+    load: {
+      key: API_KEY
+    }
+  })
   export default {
       components: {
       Card
@@ -88,6 +90,11 @@ import IncidentsService from '@/services/IncidentsService'
     name: 'feedbacks',
     data () {
       return {
+//         icon: {
+// url: 'https://www.google.tn/search?q=circle+png&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiS_suE5LDaAhVKaxQKHTXwAZsQ_AUoAXoECAAQAw#imgrc=zJcif-TCHUMWaM:',
+//     size: {width: 46, height: 46, f: 'px', b: 'px'},
+//     scaledSize: {width: 23, height: 23, f: 'px', b: 'px'}
+//         },
         incidents: [],
         id : '',
          center: {
