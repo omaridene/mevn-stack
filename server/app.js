@@ -11,6 +11,7 @@ var feedbacks = require('./routes/feedbacks');
 var incidents = require('./routes/incidents');
 var Incident = require('./api/incident');
 var Delegation = require('./api/delegation');
+var User = require('./api/user');
 
 var app = express();
 const cors = require('cors')
@@ -53,6 +54,7 @@ app.use('/index', index);
 app.use('/users', users);
 app.use('/incident', Incident);
 app.use('/delegation', Delegation);
+app.use('/user', User);
 
 
 // catch 404 and forward to error handler
