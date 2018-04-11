@@ -15,6 +15,7 @@ import EditFeedBack from 'src/components/Dashboard/Views/EditFeedback.vue'
 import FeedbackDetail from 'src/components/Dashboard/Views/FeedBackDetail.vue'
 import test from 'src/components/Dashboard/Views/test.vue'
 import TableList from 'src/components/Dashboard/Views/TableList'
+import prediction from 'src/components/Dashboard/Views/prediction'
 
 const routes = [
   {
@@ -88,6 +89,11 @@ const routes = [
         path: 'TableList',
         name: 'TableList',
         component: TableList
+      },
+      {
+        path: 'prediction/p/:id',
+        name: 'prediction',
+        component: prediction
       }
     ]
   },

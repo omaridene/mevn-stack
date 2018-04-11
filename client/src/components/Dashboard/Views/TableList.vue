@@ -46,6 +46,8 @@
                 <i class="fa fa-clock-o"></i> Incidents depending delegation <br/>
                 <router-link v-bind:to="{ name: 'statistics' }" class=""><button class="btn">show more statistics
                 </button></router-link>
+                <router-link v-bind:to="{ name: 'prediction' , params: { id: deg  } }" class="">  <button class="btn">show predictions
+                </button></router-link>
               </div>
             </template>
           </chart-card>
@@ -74,6 +76,7 @@
 
     data () {
       return {
+        deg : 'aa' ,
         alerts : [],
         delegations : [],
         alertsbydelegation : [],
@@ -100,7 +103,7 @@
         this.delegations = response.data
       },
       async showalerts(delegation){
-
+     this.deg = delegation
         const response = await IncidentsService.getalertsbydelegation(delegation)
         this.alertsbydelegation = response.data
         var aa = (this.alertsbydelegation.filter((a)=>a.type == "braquage").length*100)/this.alertsbydelegation.length

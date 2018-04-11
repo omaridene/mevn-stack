@@ -27,9 +27,9 @@ var incident = req.body.incident;
 var new_feedback = new Feedback({
     title: title,
     description: description,
-    incident : incident
+    incident : incident,
+    degree : 3
 })
-
 new_feedback.save(function (error) {
     if (error) {
         console.log(error)

@@ -208,7 +208,9 @@ valid2 : false,
         }
 
       }
-    },beforeMount(){this.loadchart()},
+    },
+
+    beforeMount(){this.loadchart()},
     mounted () {
       this.getalerts(),
         this.loadchart()
@@ -500,7 +502,8 @@ this.year=2016
       },
       loadchart(){
         console.log(this.alerts.length)
-        this.lineChart.data.series=[[
+        this.lineChart.data.series=[
+          [
           this.alerts.filter((a)=>new Date(a.Date).getHours()>9 && a.type==="braquage"&& new Date(a.Date).getHours()<12).length,
           this.alerts.filter((a)=>new Date(a.Date).getHours()>12 && a.type==="braquage"&& new Date(a.Date).getHours()<15).length,
           this.alerts.filter((a)=>new Date(a.Date).getHours()>15 && a.type==="braquage"&& new Date(a.Date).getHours()<18).length,

@@ -45,7 +45,8 @@ var FeedbackSchema = new Schema({
   description: String,
 date:{type:Date,default:Date.now()},
     comments : [commentSchema],
-    incident : String
+    incident : String,
+    degree : {type: Number}
 
 
 });
