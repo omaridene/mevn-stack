@@ -6,7 +6,7 @@
         <i class="nc-icon nc-chart-pie-35"></i>
         <p>Home</p>
       </sidebar-link>
-      <sidebar-link to="user">
+      <sidebar-link to="user" v-if="token != null">
         <i class="nc-icon nc-circle-09"></i>
         <p>User Profile</p>
       </sidebar-link>
@@ -53,6 +53,11 @@
       DashboardContent,
       MobileMenu
     },
+    data () {
+      return{
+      token: localStorage.getItem('token'),
+      user: JSON.parse(localStorage.getItem('user')),
+    }},
     methods: {
       toggleSidebar () {
         if (this.$sidebar.showSidebar) {

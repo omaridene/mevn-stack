@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Feedback = require("../models/feedback");
 var Incident = require("../models/incident");
+var User = require("../models/user");
 
 /* GET home page. */
 
@@ -22,8 +23,8 @@ router.post('/addFeedback', (req, res) => {
     var db = req.db;
 var title = req.body.title;
 var description = req.body.description;
-
-
+var user = req.body.user._id;
+console.log(req.body)
 Incident.findOne({Title:req.body.incident}, '', function (error, incident) {
     if (error) { console.error(error); }
 
@@ -31,7 +32,8 @@ Incident.findOne({Title:req.body.incident}, '', function (error, incident) {
     var new_feedback = new Feedback({
         title: title,
         description: description,
-        incident : incident
+        incident : incident,
+        user : user
     })
 
     new_feedback.save(function (error) {
