@@ -30,8 +30,8 @@
           </li>
 
           <li class="nav-item" v-if="token != null">
-              <router-link v-bind:to="{ name: 'Overview' }" @click="onLogout"><a   class="nav-link">
-              Log out
+              <router-link v-bind:to="{ name: 'Overview' }" ><a  @click="onLogout" class="nav-link">
+                Log out
             </a></router-link>
           </li>
           <li class="nav-item" v-if="token ===null">
@@ -44,6 +44,14 @@
               My alerts
             </a>
           </li>
+
+          <li class="nav-item" v-if="token != null">
+            <router-link v-bind:to="{ name: 'MyFeedback' }"><a   class="nav-link">
+              My feedbacks
+            </a></router-link>
+          </li>
+
+
         </ul>
       </div>
     </div>
