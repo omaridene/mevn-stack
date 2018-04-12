@@ -1,7 +1,26 @@
 <template>
   <div class="content">
     <div class="row" style="display: block">
- <button @click="valid=!valid">show pridection</button>
+      <div>
+choose month to see predictions for today in {{$route.params.id}}
+        <select name="mounth" id="mounth" v-model="mounth" @click="onloade" class="custom-select-sm btn">
+          <option value="0" class="btn">JAN</option>
+          <option value="1" class="btn">FEV</option>
+          <option value="2" class="btn">MAR</option>
+          <option value="3" class="btn">AVR</option>
+          <option value="4" class="btn">MAY</option>
+          <option value="5" class="btn">JUI</option>
+          <option value="6" class="btn">JUILLY</option>
+          <option value="7" class="btn">AUGUST</option>
+          <option value="8" class="btn"> SEP</option>
+          <option value="9" class="btn">OCT</option>
+          <option value="10" class="btn">NOV</option>
+          <option value="11" class="btn">DEC</option>
+
+        </select>
+      </div>
+
+
       <div class="col-md-8">
         <chart-card :chart-data="lineChart.data"
                     :chart-options="lineChart.options"
@@ -23,23 +42,7 @@
           </template>
         </chart-card>
       </div>
-      <div>
-        <select name="mounth" id="mounth" v-model="mounth" @click="onloade">
-          <option value="0">JAN</option>
-          <option value="1">FEV</option>
-          <option value="2">MAR</option>
-          <option value="3">AVR</option>
-          <option value="4">MAY</option>
-          <option value="5">JUI</option>
-          <option value="6">JUILLY</option>
-          <option value="7">AUGUST</option>
-          <option value="8">SEP</option>
-          <option value="9">OCT</option>
-          <option value="10">NOV</option>
-          <option value="11">DEC</option>
 
-        </select>
-      </div>
     <div class="container-fluid">
       <card>
         <template slot="header">
@@ -192,7 +195,6 @@
       }
     },
     mounted(){
-      this.onloade()
     },
     methods: {
       notifyVue (verticalAlign, horizontalAlign) {
@@ -212,16 +214,10 @@
       },
 
       async onloade(){
+        this.valid=!this.valid
         const response = await IncidentsService.getalertsbydelegation(this.$route.params.id)
         this.alerts = response.data
-        for (var i= 0 ; i<30 ; i++){
-        console.log(  this.alerts.filter((a)=>new Date(a.Date).getDay()===i && a.type==="braquage").length)
-
-if (this.alerts.filter((a)=>new Date(a.Date).getDay()===i && a.type==="braquage" && new Date(a.Date).getMonth()===0 ).length >5) {
-  this.braquage =this.braquage+"\n danger day " + i+1 + " mounth 1  \n"
-}
-        }
-        this.lineChart.data.series=[
+        this.lineChart.data.series = [
           [
             this.alerts.filter((a)=>new Date(a.Date).getHours()>9 && a.type==="braquage"&& new Date(a.Date).getHours()<12 && new Date(a.Date).getMonth() ===this.mounth ).length,
             this.alerts.filter((a)=>new Date(a.Date).getHours()>12 && a.type==="braquage"&& new Date(a.Date).getHours()<15&& new Date(a.Date).getMonth() ===this.mounth).length,
