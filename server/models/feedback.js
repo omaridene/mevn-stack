@@ -37,14 +37,16 @@ var IncidentSchema = new mongoose.Schema({
 
 var commentSchema = mongoose.Schema({
     content:{type:String},
-    date:{type:Date,default:Date.now}
+    date:{type:Date,default:Date.now},
+    user:{type:mongoose.Schema.Types.ObjectId,ref:'User'},
+
 });
 
 
 var FeedbackSchema = new Schema({
   title: String,
   description: String,
-date:{type:Date,default:Date.now()},
+date:{type:Date,default:Date.now},
     comments : [commentSchema],
     incident : IncidentSchema,
     user:{type:mongoose.Schema.Types.ObjectId,ref:'User'},

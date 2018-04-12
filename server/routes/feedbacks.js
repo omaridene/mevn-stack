@@ -159,13 +159,14 @@ router.get('/getLastFeedback', (req, res) => {
 // Add new comment
 router.put('/feedback/:id/addComment', (req, res) => {
     var db = req.db;
-Feedback.findById(req.params.id, 'title description comments', function (error, feedback) {
+Feedback.findById(req.params.id, '', function (error, feedback) {
     if (error) { console.error(error); }
     if (!Array.isArray(feedback.comments)) {
         feedback.comments = [];
     }
     feedback.comments.push({
-        content: req.body.content
+        content: req.body.content,
+        user: req.body.user._id
     })
     feedback.save(function (error) {
         if (error) {

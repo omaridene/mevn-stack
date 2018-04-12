@@ -37,9 +37,12 @@
               <div class="col-md-12">
                 <h5>Comments</h5>
 
-                <div class="alert alert-info" v-for="commentt in comments">
-                  <span >{{commentt.content}}</span>
-                  <td style="position: absolute;right:20px;top:10px;">
+
+
+                <div  v-for="commentt in comments" >
+                  <div v-bind:class="[commentt.user === user._id ? userCommentClass :  alluserCommentClass]" >
+                    <span >{{commentt.content}}</span>
+                  <td style="position: absolute;right:20px;top:10px;" v-if="commentt.user === user._id">
                     <button type="button" class="btn-simple btn btn-xs btn-danger" @click="updateC(commentt._id)">
                       <i class="fa fa-edit"></i>
                     </button>
@@ -47,7 +50,7 @@
                       <i class="fa fa-times"></i>
                     </button>
                   </td>
-                </div>
+                </div></div>
 
 
 
@@ -96,6 +99,10 @@
     name: 'Feedback Detail',
     data () {
       return {
+        token: localStorage.getItem('token'),
+        user: JSON.parse(localStorage.getItem('user')),
+        userCommentClass:'alert alert-info',
+        alluserCommentClass:'alert alert-danger',
         title: '',
         description: '',
         date: '',
@@ -175,7 +182,8 @@
     if (this.addCommentControl.length <= 0) {
       await FeedbacksService.addCommentToFeedback(this.$route.params.id,
         {
-          content: this.comment
+          content: this.comment,
+          user : this.user
         }
         )
       $this.$swal(
@@ -184,7 +192,8 @@
         'success'
       )
         this.comment=""
-        this.getComments()}
+      $this.comments=[]
+      $this.getComments()}
         else{
       $this.$swal({
         type: 'error',
