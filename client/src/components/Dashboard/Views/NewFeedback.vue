@@ -148,11 +148,10 @@
         },
         async updateMap () {
           const response = await IncidentsService.fetchIncidentByTitle(this.selected)
-    const responseFeedbackIncidentPlace = await FeedbacksService.getFeedbackIncidentLatLong(response.data.incident)
-    console.log(response.data.incident)
-    this.center.lat =  responseFeedbackIncidentPlace.data.latitude
+    const responseFeedbackIncidentPlace = await FeedbacksService.getFeedbackIncidentLatLong(response.data.incident.address.place)
+    this.center.lat = responseFeedbackIncidentPlace.data.latitude
     this.center.lng = responseFeedbackIncidentPlace.data.longitude
-    console.log(this.center.lat + "" + this.center.lng)
+    console.log(response.data.incident.address.place+" : the place is "+this.center.lat + "" + this.center.lng)
   }
 
     }

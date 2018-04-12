@@ -48,7 +48,6 @@
         <tr>
           <td width="300">Title</td>
           <td width="650">Description</td>
-          <td width="200" align="center">Action</td>
         </tr>
         <tr v-for="feedback in feedbacks">
           <td>
