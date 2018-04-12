@@ -10,12 +10,15 @@
                             <div class="card-body">
                                     
                               <h5 class="card-title"><strong>Title: </strong>{{title}}</h5>
-                              <p class="card-text"><strong>Date of report: </strong>{{date}}
+                              <p class="card-text"><strong>Date of report: </strong>{{date | moment("dddd, MMMM Do YYYY")}}
                                 </p>
                               <p class="card-text"><strong>Description: </strong> {{description}}.</p>
                               <p class="card-text"><strong>Type: </strong> {{type}}.</p>
+                              <p class="card-text"><strong>Lat: </strong> {{lat}}.</p>
+                              <p class="card-text"><strong>lng: </strong> {{lng}}.</p>
 
                              
+                              <a href="#" class="btn btn-primary">Show on map</a>
                               <a href="#" class="btn btn-primary">Go to rescue</a>
                             </div>
                           </div>
@@ -27,11 +30,13 @@
             </div>
           </div>
         </div>
+      
       </template>
       <script>
         
         import IncidentsService from '@/services/IncidentsService'
-      
+
+  
         export default {
           
           name: 'Detail',
@@ -41,13 +46,16 @@
               description: '',
               date: '',
               type: '',
-              
+              lat:'',
+              lng:''
+        
             }
           },
           mounted () {
             this.getIncident()
               
           },
+  
           methods: {
             async getIncident() {
               const response = await IncidentsService.getIncidentDetails({
@@ -57,10 +65,16 @@
               this.description = response.data.description
               this.date = response.data.date
               this.type=response.data.type
+              this.lat=response.data.address.lat
+              this.lng=response.data.address.lng
             }
           }
         }
       
       </script>
       
-      
+      <style>
+        #map {
+          min-height: calc(100vh - 123px);
+        }
+      </style>

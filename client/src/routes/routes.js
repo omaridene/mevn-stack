@@ -16,6 +16,7 @@ import EditFeedBack from 'src/components/Dashboard/Views/EditFeedback.vue'
 import FeedbackDetail from 'src/components/Dashboard/Views/FeedBackDetail.vue'
 import IncidentDetail from 'src/components/Dashboard/Views/IncidentDetail.vue'
 import test from 'src/components/Dashboard/Views/test.vue'
+import IncidentDet from 'src/components/Dashboard/Views/IncidentDet.vue'
 
 const routes = [
   {
@@ -93,8 +94,8 @@ const routes = [
       },
       {
         path: 'notifications/detail/:id',
-        name: 'Incident Detail',
-        component: IncidentDetail
+        name: 'incident Det',
+        component: IncidentDet
 
       }
       

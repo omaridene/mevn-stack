@@ -21,7 +21,7 @@ var IncidentSchema = new mongoose.Schema({
     date:{
         type:Date,default:Date.now
     },
-    address: addressSchema,
+    address: {lat:{type: Number, default:36.8984667}  ,lng: {type: Number, default: 10.1897982} },
     type:{
         type: String, required: true, minlength: 1, trim: true
     }
