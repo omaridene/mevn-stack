@@ -2,47 +2,48 @@
   <div class="feedback">
     <div class="form">
       <h1>Add Feedback</h1>
+      <p v-if="errors.length">
+        <b>Please correct the following error(s):</b>
+      <p v-for="error in errors">{{ error }}</p>
 
-        <p v-if="errors.length">
-          <b>Please correct the following error(s):</b>
-          <p v-for="error in errors">{{ error }}</p>
 
-
-        <div>
+      <div>
         <input type="text" name="title" placeholder="TITLE" v-model="title">
       </div>
-<div>
-      <select v-model="selected" style="width:47%">
-        <option  v-for="(incident, index) in incidents" v-bind:selected="index === 0">{{incident.Title}}</option>
-      </select>
+
+      <div>
+        <select v-model="selected" style="width:48%">
+          <option v-for="(incident, index) in incidents" v-bind:selected="index === 0">{{incident.Title}}</option>
+        </select>
+      </div>
 
 
-  <div v-if="center.lat != 0 || center.lng != 0">
-  <gmap-map
-    id="map"
-    :center="center"
-    :zoom="13"
-    :options="options"
-    map-type-id="terrain">
-    <gmap-marker :position="center">
-    </gmap-marker>
-  </gmap-map>
-  </div>
-
-
-
-</div>
       <div>
         <textarea rows="15" cols="15" placeholder="DESCRIPTION" v-model="description" name="description"></textarea>
       </div>
 
-      <div>
-        <button class="app_post_btn" @click="addFeedback" >Add</button>
-      </div>
-
 
     </div>
+    <div style="display: flex;flex-wrap: wrap;align-items: center;justify-content: center;margin-top:30px ">
+      <gmap-map v-if="center.lat != 0 || center.lng != 0" style="width: 70%"
+                id="map"
+                :center="center"
+                :zoom="13"
+                :options="options"
+                map-type-id="roadmap"
+      >
+        <gmap-marker :position="center">
+        </gmap-marker>
+      </gmap-map>
+
+    </div>
+
+    <div style="display: flex;flex-wrap: wrap;align-items: center;justify-content: center;margin-top:30px ">
+      <button class="app_post_btn" @click="addFeedback">Add</button>
+    </div>
+
   </div>
+
 </template>
 
 <script>
@@ -51,6 +52,7 @@
   import {API_KEY} from './Maps/API_KEY'
   import Vue from 'vue'
   import * as VueGoogleMaps from 'vue2-google-maps'
+
   Vue.use(VueGoogleMaps, {
     load: {
       key: API_KEY
@@ -58,7 +60,7 @@
   })
   export default {
     name: 'NewFeedback',
-    data () {
+    data() {
       return {
         token: localStorage.getItem('token'),
         user: JSON.parse(localStorage.getItem('user')),
@@ -68,8 +70,8 @@
         incidents: [],
         selected: '',
         center: {
-          lat: 0,
-          lng: 0
+          lat: '',
+          lng: ''
         },
         options: {
           styles: [{
@@ -113,48 +115,59 @@
         }
       }
     },
-    mounted () {
+    mounted() {
       this.getAllIncidents()
     },
-    beforeUpdate(){
-      if(this.selected != "")
-      this.updateMap()
+    beforeUpdate() {
+      if (this.selected != "")
+        this.updateMap()
     },
     methods: {
-      async addFeedback () {
-        this.errors = []
-        if (!this.title) this.errors.push('Title required.')
-        if (!this.description) this.errors.push('Description required.')
-        if (this.errors.length <= 0) {
-          await FeedbacksService.addFeedback({
-          title: this.title,
-          description: this.description,
-            incident : this.selected,
-            user : this.user
-        })
-          this.$swal(
-            'Great!',
-            `Your feedback has been added!`,
-            'success'
-          )
-          this.$router.push({ name: 'Feedbacks' })
-        this.$router.push('feedbacks')
-        }
-      },
-      async getAllIncidents () {
-        this.incidents = []
-        const response = await IncidentsService.fetchIncidents()
-        this.incidents = response.data.incidents
-        },
-        async updateMap () {
-          const response = await IncidentsService.fetchIncidentByTitle(this.selected)
-    const responseFeedbackIncidentPlace = await FeedbacksService.getFeedbackIncidentLatLong(response.data.incident.address.place)
+      async addFeedback()
+  {
+    this.errors = []
+    if (!this.title) this.errors.push('Title required.')
+    if (!this.description) this.errors.push('Description required.')
+    if (this.errors.length <= 0) {
+      await
+      FeedbacksService.addFeedback({
+        title: this.title,
+        description: this.description,
+        incident: this.selected,
+        user: this.user
+      })
+      this.$swal(
+        'Great!',
+        `Your feedback has been added!`,
+        'success'
+      )
+      this.$router.push({name: 'Feedbacks'})
+      this.$router.push('feedbacks')
+    }
+  }
+  ,
+  async
+  getAllIncidents()
+  {
+    this.incidents = []
+    const response = await
+    IncidentsService.fetchIncidents()
+    this.incidents = response.data.incidents
+  }
+  ,
+  async
+  updateMap()
+  {
+    const response = await
+    IncidentsService.fetchIncidentByTitle(this.selected)
+    const responseFeedbackIncidentPlace = await
+    FeedbacksService.getFeedbackIncidentLatLong(response.data.incident.address.place)
     this.center.lat = responseFeedbackIncidentPlace.data.latitude
     this.center.lng = responseFeedbackIncidentPlace.data.longitude
-    console.log(response.data.incident.address.place+" : the place is "+this.center.lat + "" + this.center.lng)
+    console.log(response.data.incident.address.place + " : the place is " + this.center.lat + "" + this.center.lng)
   }
 
-    }
+  }
   }
 </script>
 <style type="text/css">
@@ -166,12 +179,14 @@
     font-size: 12px;
   }
 
-  .form{
+  .form {
     text-align: center;
   }
+
   .form div {
     margin: 20px;
   }
+
   .app_post_btn {
     background: #4d7ef7;
     color: #fff;
@@ -183,7 +198,8 @@
     border: none;
     cursor: pointer;
   }
-   #map {
-     min-height: calc(100vh - 123px);
-   }
+
+  #map {
+    min-height: calc(100vh - 123px);
+  }
 </style>

@@ -91,7 +91,7 @@
         // localStorage.setItem('token', response.data.tokens[data.tokens.length - 1].token)
         localStorage.setItem('token',response.data.tokens[response.data.tokens.length - 1].token)
         this.$router.go({
-          path: '/feedbacks'
+          path: 'user'
         })
       })
         // .then(data => {

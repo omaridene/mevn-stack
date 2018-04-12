@@ -4,7 +4,7 @@
     <img src="../../../../static/img/feedback.png">
     </div>
     <div v-if="feedbacks.length > 0" class="table-wrap">
-      <div style="display: flex;flex-wrap: wrap;align-items: center;justify-content: center;margin-top:30px ">
+      <div style="display: flex;flex-wrap: wrap;align-items: center;justify-content: center;margin-top:30px " v-if="token !=null">
         <router-link v-bind:to="{ name: 'New Feedback' }" class="add_post_link">Add Feedback</router-link>
       </div>
     <div style="display: flex;flex-wrap: wrap;align-items: center;justify-content: center;margin-top:30px ">

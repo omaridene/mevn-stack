@@ -20,7 +20,7 @@ const routes = [
   {
     path: '/',
     component: DashboardLayout,
-    redirect: '/home'
+    redirect: '/maps'
   },
   {
     path: '/',
@@ -95,7 +95,7 @@ const routes = [
   },
   { path: '*',
     component: DashboardLayout,
-    redirect: '/home' }
+    redirect: '/maps' }
 ]
 
 /**
