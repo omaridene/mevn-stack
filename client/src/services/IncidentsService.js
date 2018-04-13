@@ -8,7 +8,7 @@ export default {
     return Api().get('incident')
   },
   getNearestInidents () {
-    return Api().get('incident/current')
+    return Api().get('incident/nearest')
   },
   getIncidentById (params) {
     return Api().get('incident/current/' + params.id)

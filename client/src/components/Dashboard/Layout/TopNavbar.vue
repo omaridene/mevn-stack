@@ -30,16 +30,16 @@
           </li>
           
           <li class="nav-item" v-if="token != null">
-            <a  @click="onLogout" class="nav-link">
-              Log out
-            </a>
+              <router-link v-bind:to="{ name: 'Overview' }" ><a  @click="onLogout" class="nav-link">
+                Log out
+            </a></router-link>
           </li>
           <li class="nav-item" v-if="token ===null">
-            <a   class="nav-link">
+            <router-link v-bind:to="{ name: 'User' }"><a   class="nav-link">
               Login
-            </a>
+            </a></router-link>
           </li>
-          <li class="nav-item">
+          <li class="nav-item"  v-if="token != null">
             <a href="/#/myalerts" class="nav-link">
               My alerts
             </a>
@@ -73,7 +73,7 @@
       axios.delete(url, {headers: {Authorization: localStorage.getItem('token')}}).then((response) => {
         localStorage.removeItem('user')
         localStorage.removeItem('token')
-        this.$router.push('/login')
+         this.$router.push('/maps')
       }).catch(error => {
         console.log(error)
       })

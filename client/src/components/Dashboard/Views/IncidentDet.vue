@@ -3,10 +3,10 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-8">
-                <!-- <gmap-map
+                <gmap-map
                     id="map"
                     :center="center"
-                    :zoom="8"
+                    :zoom="14"
                     :options="options"
                     map-type-id="roadmap"
                 >
@@ -18,7 +18,7 @@
                     :draggable="true"
                     @click="center=m.position"
                     ></gmap-marker>
-                </gmap-map> -->
+                </gmap-map>
             </div>
             <div class="col-md-4">
             <card>
@@ -47,16 +47,16 @@
 <script>
   import IncidentsService from '@/services/IncidentsService'
   import Card from 'src/components/UIComponents/Cards/Card.vue'
-//   import {API_KEY} from './Maps/API_KEY'
-//   import Vue from 'vue'
-//   import * as VueGoogleMaps from 'vue2-google-maps'
+  import {API_KEY} from './Maps/API_KEY'
+  import Vue from 'vue'
+  import * as VueGoogleMaps from 'vue2-google-maps'
 
 
-//   Vue.use(VueGoogleMaps, {
-//     load: {
-//       key: API_KEY
-//     }
-//   })
+  Vue.use(VueGoogleMaps, {
+    load: {
+      key: API_KEY
+    }
+  })
   export default {
       components: {
       Card
@@ -132,6 +132,10 @@
         this.place = response.data.address.place
         this.city = response.data.address.city
         this.markers.push({position: {lat: response.data.address.coordinates[0], lng: response.data.address.coordinates[1]}})
+        this.center = {
+          lat: response.data.address.coordinates[0],
+          lng: response.data.address.coordinates[1]
+        }
         
       }
   },

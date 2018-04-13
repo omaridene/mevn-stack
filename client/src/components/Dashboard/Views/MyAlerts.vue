@@ -1,5 +1,5 @@
 <template>
-<div class="content">
+<div class="content" ref="test">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
@@ -19,7 +19,7 @@
               </p>
             </div>
                 <div class="typo-line">
-                <button type="button" aria-hidden="true" class="close" @click="changeMArker(i.address.coordinates[0],i.address.coordinates[1])"> View </button>
+                <button type="button" aria-hidden="true" class="close" @click="changeMArker(i)"> View </button>
                 <button type="button" aria-hidden="true" class="close" @click="deleteAlert(i._id)"> Delete | </button>
                 </div>
             </card>
@@ -49,7 +49,7 @@
                 <gmap-map
                     id="map"
                     :center="center"
-                    :zoom="8"
+                    :zoom="14"
                     :options="options"
                     style="height: 800px"
                     map-type-id="roadmap"
@@ -62,8 +62,14 @@
 
                     :clickable="true"
                     :draggable="false"
-                    @click="center=m.position"
-                    ></gmap-marker>
+                    @click="center = m.position"
+                    >
+                      <gmap-info-window>
+                          Title : <b>{{title}}</b><i class="fa fa-map-marker"></i>{{place}}<br><br>
+                          Description : {{description}}
+                      </gmap-info-window>
+            </gmap-marker>
+                    
                 </gmap-map>
             </div>
             
@@ -96,11 +102,15 @@ import IncidentsService from '@/services/IncidentsService'
 //     scaledSize: {width: 23, height: 23, f: 'px', b: 'px'}
 //         },
         incidents: [],
+        
         id : '',
          center: {
           lat: 36.900,
           lng: 10.186
         },
+        title: '',
+        description:'',
+        place:'',
         markers: [],
         lat: '',
         lng: '',
@@ -150,6 +160,7 @@ import IncidentsService from '@/services/IncidentsService'
       this.getMyIncidents()
     },
     methods: {
+      
       async getMyIncidents () {
         console.log(localStorage.getItem('userId'))
         this.id = localStorage.getItem('userId')
@@ -157,9 +168,19 @@ import IncidentsService from '@/services/IncidentsService'
         this.incidents = response.data
         console.log(response.data)
       },
-      async changeMArker (lat,lng) {
+      async changeMArker (lat) {
+       
           this.markers = []
-        this.markers.push({position: {lat: lat, lng: lng}})
+        this.markers.push({position: {lat: lat.address.coordinates[0], lng: lat.address.coordinates[1]}})
+        this.title = lat.Title
+        this.description = lat.Description
+        this.place = lat.address.place
+        this.center = {
+          lat: lat.address.coordinates[0],
+          lng: lat.address.coordinates[1]
+        }
+       
+			
         
       },
       

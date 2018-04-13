@@ -2,7 +2,7 @@
 <div class="content">
   <div class="container-fluid">
     <div class="row">
-      
+      {{token}}
         <div class="col-md-7">
           <!-- <vue-google-heatmap :points="points" /> -->
           <!-- :width="600" :height="600" -->
@@ -22,8 +22,13 @@
 
                     :clickable="true"
                     :draggable="false"
-                    @click="center=m.position"
-                    ></gmap-marker>
+                    @click="cente(m.position,m.id)"
+                    >
+                    <!-- <gmap-info-window :opened="tab">
+                          Title : <b>{{title}}</b><i class="fa fa-map-marker"></i>{{place}}<br><br>
+                          Description : {{description}}
+                      </gmap-info-window> -->
+                      </gmap-marker>
                 </gmap-map>
         </div>
         <div class="col-md-5">
@@ -114,6 +119,7 @@ export default {
     },
   data () {
     return {
+      tab : false,
       points: [
         // {lat: response.data[i].address.coordinates[0], lng: response.data[i].address.coordinates[1]}
         // {location: new VueGoogleHeatmap.maps.LatLng(37.782, -122.447), weight: 0.5},
@@ -128,6 +134,9 @@ export default {
           lng: 10.186
         },
         markers: [],
+        title:'',
+        description:'',
+        place:'',
         options: {
           styles: [{
             'featureType': 'water',
@@ -180,6 +189,12 @@ export default {
             }
         },
   methods: {
+    cente (l,id) {
+        this.center = l
+        //  this.$router.go({
+        //   path: '/#/myalerts'
+        // })
+      },
       async getNearest () {
         const response = await IncidentsService.getNearestInidents()
         this.incidents = response.data
@@ -203,7 +218,7 @@ export default {
         // console.log(response.data[0].address)
         for (let i = 0; i < response.data.length; i++) {
           // console.log(response.data[i].address.coordinates[0])
-          this.points.push({position: {lat: response.data[i].address.coordinates[0], lng: response.data[i].address.coordinates[1]}})
+          this.points.push({position: {lat: response.data[i].address.coordinates[0], lng: response.data[i].address.coordinates[1]-0.00003},id: response.data[i]._id})
         }
         // console.log(this.points.length)
       })

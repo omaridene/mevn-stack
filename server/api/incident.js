@@ -80,7 +80,7 @@ Incident.remove({
     
             });
     });
-router.get('/current', function(req, res) {
+router.get('/nearest', function(req, res) {
     var lng;
     var lat;
     location((err, loc) => {

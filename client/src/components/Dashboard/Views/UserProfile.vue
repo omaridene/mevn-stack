@@ -90,6 +90,9 @@
             localStorage.setItem('user', JSON.stringify(response.data))
           // localStorage.setItem('token', response.data.tokens[data.tokens.length - 1].token)
            localStorage.setItem('token',response.data.tokens[response.data.tokens.length - 1].token)
+           this.$router.go({
+          path: '/maps'
+        })
         })
         // .then(data => {
         //   localStorage.setItem('user', JSON.stringify(data))
