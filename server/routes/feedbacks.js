@@ -4,19 +4,7 @@ var Feedback = require("../models/feedback");
 var Incident = require("../models/incident");
 var User = require("../models/user");
 
-/* GET home page. */
 
-router.get('feedbacks', (req, res) => {
-  res.send(
-    [{
-      title: "Hello feedbacks!",
-      description: "Hi there! How are you?"
-    },{
-        title: "Hello feedbacks!",
-        description: "Hi there! How are you?"
-    }]
-  )
-})
 
 // Add new feedback
 router.post('/addFeedback', (req, res) => {
@@ -33,7 +21,8 @@ Incident.findOne({Title:req.body.incident}, '', function (error, incident) {
         title: title,
         description: description,
         incident : incident,
-        user : user
+        user : user ,
+        status : 'enabled'
     })
 
     new_feedback.save(function (error) {
@@ -53,12 +42,12 @@ Incident.findOne({Title:req.body.incident}, '', function (error, incident) {
 
 // Fetch all feedbacks
 router.get('/getAllFeedbacks', (req, res) => {
-    Feedback.find({},'', function (error, feedbacks) {
+    Feedback.find({},'', function (error, feedbacks){
     if (error) { console.error(error); }
     res.send({
         feedbacks: feedbacks
     })
-}).sort({_id:-1})
+}).sort({_id:-1}).populate('user').populate('comments.user')
 })
 
 
@@ -68,10 +57,10 @@ router.get('/getAllFeedbacks', (req, res) => {
 // Fetch single feedback
 router.get('/feedback/:id', (req, res) => {
     var db = req.db;
-Feedback.findById(req.params.id, 'title description date incident comments', function (error, feedback) {
+Feedback.findById(req.params.id, '', function (error, feedback) {
     if (error) { console.error(error); }
     res.send(feedback)
-})
+}).populate('user').populate('comments.user')
 })
 
 // Get long and alt of incident of feedback
@@ -103,7 +92,7 @@ geocoder.geocode({address: req.params.place}, function(req, resGeo) {
 // Update a feedback
 router.put('/feedback/:id', (req, res) => {
     var db = req.db;
-Feedback.findById(req.params.id, 'title description', function (error, feedback) {
+Feedback.findById(req.params.id, '', function (error, feedback) {
     if (error) { console.error(error); }
 
     feedback.title = req.body.title
@@ -120,16 +109,21 @@ Feedback.findById(req.params.id, 'title description', function (error, feedback)
 })
 
 
-// Delete a post
-router.delete('/feedback/:id', (req, res) => {
+// Delete a feedback
+router.put('/delete/feedback/:id', (req, res) => {
     var db = req.db;
-Feedback.remove({
-    _id: req.params.id
-}, function(err, feedback){
-    if (err)
-        res.send(err)
-    res.send({
-        success: true
+Feedback.findById(req.params.id, '', function (error, feedback) {
+    if (error) { console.error(error); }
+
+    feedback.status = 'disabled'
+
+    feedback.save(function (error) {
+        if (error) {
+            console.log(error)
+        }
+        res.send({
+            success: true
+        })
     })
 })
 })
@@ -139,7 +133,7 @@ Feedback.remove({
 
 // Get the last feedback
 router.get('/getLastFeedback', (req, res) => {
-    Feedback.find({}, '', function (error, feedbacks) {
+    Feedback.find({status:'enabled'}, '', function (error, feedbacks) {
     if (error) { console.error(error); }
     res.send({
         feedbacks: feedbacks
@@ -200,11 +194,11 @@ Feedback.findOne({'_id': req.params.idF}, function (err, feedback) {
 // Get a comment from feedbacl
 router.get('/feedback/:idF/getComment/:idC', (req, res) => {
     Feedback.findOne({'_id': req.params.idF}, function (err, feedback) {
-    var comment=feedback.comments.id(req.params.idC);
+    var comment=feedback.comments.id(req.params.idC).populate('user');
     res.send({
         comment: comment
     })
-});
+})
 })
 
 

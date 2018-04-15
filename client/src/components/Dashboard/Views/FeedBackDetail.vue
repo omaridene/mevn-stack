@@ -6,18 +6,19 @@
         <div class="col-12">
           <card>
             <template slot="header">
-              <h4 class="card-title">{{title}}</h4>
-              <p class="card-category">{{date}}</p>
+              <h4 class="card-title">{{feedback.title}}</h4>
+              <div style="display: inline"> <p class="card-category">Published by :</p><h5>{{feedback.user.firstName}} {{feedback.user.lastName}}</h5></div>
+              <p class="card-category"> {{feedback.date}}</p>
             </template>
             <div class="typo-line">
-              <h3><p class="category">Incident</p>{{incident.Title}}</h3>
+              <h3><p class="category">Incident</p>{{feedback.incident.Title}}</h3>
             </div>
 
             <div class="typo-line">
-              <h3><p class="category">Description</p>{{description}}</h3>
+              <h3><p class="category">Description</p>{{feedback.description}}</h3>
             </div>
 
-            <div class="row">
+            <div  v-if="user !=null" class="row">
               <div class="col-md-12">
                 <div class="form-group">
                   <label>Your opinion</label>
@@ -28,7 +29,7 @@
               </div>
             </div>
             <div class="text-center">
-              <button type="submit" class="btn btn-info btn-fill float-right" @click="addComment">
+              <button  v-if="user !=null" type="submit" class="btn btn-info btn-fill float-right" @click="addComment">
                 Comment it
               </button>
             </div>
@@ -37,12 +38,13 @@
               <div class="col-md-12">
                 <h5>Comments</h5>
 
+  <div v-if="user !=null">
 
-
-                <div  v-for="commentt in comments" >
-                  <div v-bind:class="[commentt.user === user._id ? userCommentClass :  alluserCommentClass]" >
+             <div  v-for="commentt in comments" >
+                  <div v-bind:class="[commentt.user._id === user._id ? userCommentClass :  alluserCommentClass]" :title="commentt.date" >
+                    <td style="color: #0e0e0e">By : {{commentt.user.firstName}} {{commentt.user.lastName}}</td>
                     <span >{{commentt.content}}</span>
-                  <td style="position: absolute;right:20px;top:10px;" v-if="commentt.user === user._id">
+                  <td style="position: absolute;right:20px;top:20px;" v-if="commentt.user._id === user._id">
                     <button type="button" class="btn-simple btn btn-xs btn-danger" @click="updateC(commentt._id)">
                       <i class="fa fa-edit"></i>
                     </button>
@@ -50,7 +52,17 @@
                       <i class="fa fa-times"></i>
                     </button>
                   </td>
-                </div></div>
+                </div>
+                </div>
+  </div>
+                <div v-if="user ===null">
+                  <div  v-for="commentt in comments" >
+                    <div class="alert alert-danger" >
+                      <span >{{commentt.content}}</span>
+
+                    </div>
+                  </div>
+                </div>
 
 
 
@@ -104,10 +116,7 @@
         user: JSON.parse(localStorage.getItem('user')),
         userCommentClass:'alert alert-info',
         alluserCommentClass:'alert alert-danger',
-        title: '',
-        description: '',
-        date: '',
-        incident: '',
+        feedback: '',
         comment: '',
         comments: [],
         addCommentControl:[],
@@ -167,11 +176,8 @@
         const response = await FeedbacksService.getFeedbackById({
           id: this.$route.params.id
         })
-        this.title = response.data.title
-        this.description = response.data.description
-        this.date = response.data.date
-        this.incident=response.data.incident
-    const responseFeedbackIncidentPlace = await FeedbacksService.getFeedbackIncidentLatLong(this.incident.address.place)
+        this.feedback = response.data
+    const responseFeedbackIncidentPlace = await FeedbacksService.getFeedbackIncidentLatLong(this.feedback.incident.address.place)
    this.center.lat =  responseFeedbackIncidentPlace.data.latitude
     this.center.lng = responseFeedbackIncidentPlace.data.longitude
   },
@@ -230,8 +236,7 @@
 
     })
   },
-  async
-  updateC(idComment)
+  async updateC(idComment)
   {
     const idFeedBack = this.$route.params.id;
     const response = await FeedbacksService.getCommentFromFeedback(idComment,idFeedBack)

@@ -2,24 +2,24 @@
   <div class="wrapper">
     <side-bar>
       <mobile-menu slot="content"></mobile-menu>
-      <sidebar-link to="maps">
+      <sidebar-link to="/maps">
         <i class="nc-icon nc-pin-3"></i>
         <p>Home</p>
       </sidebar-link>
-      <sidebar-link to="user" v-if="token != null">
+      <sidebar-link to="/user" v-if="token != null">
         <i class="nc-icon nc-circle-09"></i>
         <p>User Profile</p>
       </sidebar-link>
-      <sidebar-link to="feedbacks">
+      <sidebar-link to="/feedbacks">
         <i class="nc-icon nc-notes"></i>
         <p>Feedbacks</p>
       </sidebar-link>
-      <sidebar-link to="statistics">
+      <sidebar-link to="/statistics">
         <i class="nc-icon nc-paper-2"></i>
         <p>Incident History</p>
       </sidebar-link>
 
-      <sidebar-link to="notifications">
+      <sidebar-link to="/notifications">
         <i class="nc-icon nc-bell-55"></i>
         <p>Notifications</p>
       </sidebar-link>

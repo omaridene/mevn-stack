@@ -23,7 +23,7 @@ export default {
   },
 
   deleteFeedbackById (id) {
-    return Api().delete('feedback/' + id)
+    return Api().put('delete/feedback/' + id)
   },
   addCommentToFeedback (id, params) {
     return Api().put('/feedback/' + id + '/addComment', params)

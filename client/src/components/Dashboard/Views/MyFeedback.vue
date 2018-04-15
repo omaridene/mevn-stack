@@ -9,25 +9,34 @@
       </div>
 
 
-
-
       <table style="margin-top: 30px">
         <tr>
           <td width="300">Title</td>
           <td width="650">Description</td>
           <td width="200" align="center">Action</td>
         </tr>
-        <tr v-for="feedback in feedbacks" v-if="user._id === feedback.user">
-          <td>
+        <tr v-for="feedback in feedbacks" v-if="user._id === feedback.user._id" >
+
+          <td v-bind:class="[feedback.status === status ? disabledClass :  enabledClass]" >
             <router-link v-bind:to="{ name: 'Feedback Detail', params: { id: feedback._id } }">{{feedback.title}}
             </router-link>
           </td>
-          <td>{{ feedback.description }}</td>
-          <td align="center">
-            <button type="button" aria-hidden="true" class="close" @click="deleteFeedback(feedback._id)">Delete</button>
-            <button type="button" aria-hidden="true" class="close">
-              <router-link v-bind:to="{ name: 'Edit Feedback', params: { id: feedback._id } }">Edit|</router-link>
-            </button>
+          <td v-bind:class="[feedback.status === status ? disabledClass :  enabledClass]">{{ feedback.description }}</td>
+          <td  v-bind:class="[feedback.status === status ? disabledClass :  enabledClass]" >
+
+            <div v-if="feedback.status !== status " >
+
+              <button type="button" class="btn btn-info">
+                <router-link v-bind:to="{ name: 'Edit Feedback', params: { id: feedback._id } }"><i
+                  class="fa fa-edit"></i>
+                </router-link>
+              </button>
+
+              <button type="button" class="btn btn-danger" @click="deleteFeedback(feedback._id)">
+                <i class="fa fa-times"></i>
+              </button>
+            </div>
+            <div v-else style="display: flex;justify-content: center;">Deleted</div>
 
           </td>
         </tr>
@@ -48,6 +57,7 @@
   import Card from 'src/components/UIComponents/Cards/Card.vue'
   import LTable from 'src/components/UIComponents/Table.vue'
   import Checkbox from 'src/components/UIComponents/Inputs/Checkbox.vue'
+
   export default {
     components: {
       StatsCard
@@ -59,7 +69,10 @@
         lastFeedback: '',
         mostCommentedFeedback: '',
         token: localStorage.getItem('token'),
-        user: JSON.parse(localStorage.getItem('user'))
+        user: JSON.parse(localStorage.getItem('user')),
+        status: "disabled",
+        enabledClass:'alert alert-info',
+        disabledClass:'alert alert-danger',
       }
     },
     mounted() {
@@ -73,18 +86,21 @@
     FeedbacksService.fetchFeedbacks()
     this.feedbacks = response.data.feedbacks
     var mostCommentedFeedback = this.feedbacks[0]
-    for (var i=1;i<this.feedbacks.length;i++){
-      if(this.feedbacks[i].comments.length>mostCommentedFeedback.comments.length)
+    for (var i = 1; i < this.feedbacks.length; i++) {
+      if (this.feedbacks[i].comments.length > mostCommentedFeedback.comments.length)
         mostCommentedFeedback = this.feedbacks[i]
     }
     this.mostCommentedFeedback = mostCommentedFeedback
-  },
-  async getLastFeedback()
+  }
+  ,
+  async
+  getLastFeedback()
   {
     const response = await
     FeedbacksService.fetchLastFeedback()
     this.lastFeedback = response.data.feedbacks[0]
-  },
+  }
+  ,
   async
   deleteFeedback(id)
   {
@@ -112,6 +128,7 @@
 
 
 <style type="text/css">
+
   .table-wrap {
     width: 90%;
     margin: 0 auto;

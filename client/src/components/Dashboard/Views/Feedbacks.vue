@@ -46,10 +46,12 @@
 
       <table style="margin-top: 30px">
         <tr>
+          <td width="120">Published by</td>
           <td width="300">Title</td>
           <td width="650">Description</td>
         </tr>
-        <tr v-for="feedback in feedbacks">
+        <tr v-for="feedback in feedbacks" class="feedback" :title=feedback.date v-if="feedback.status === enabled">
+          <td>{{feedback.user.firstName}} {{feedback.user.lastName}}</td>
           <td>
             <router-link v-bind:to="{ name: 'Feedback Detail', params: { id: feedback._id } }">{{feedback.title}}
             </router-link>
@@ -85,7 +87,8 @@
         lastFeedback: '',
         mostCommentedFeedback: '',
         token: localStorage.getItem('token'),
-        user: JSON.parse(localStorage.getItem('user'))
+        user: JSON.parse(localStorage.getItem('user')),
+        enabled : "enabled"
       }
     },
     mounted() {
@@ -98,9 +101,20 @@
     const response = await
     FeedbacksService.fetchFeedbacks()
     this.feedbacks = response.data.feedbacks
-    var mostCommentedFeedback = this.feedbacks[0]
+    var mostCommentedFeedback
+    var test=false;
+    var x=0;
+    while (test === false && x<this.feedbacks.length){
+      if  (this.feedbacks[x].status === "enabled") {
+        mostCommentedFeedback=this.feedbacks[x]
+        test = true
+      }
+      else x++
+  }
+
+
     for (var i=1;i<this.feedbacks.length;i++){
-    if(this.feedbacks[i].comments.length>mostCommentedFeedback.comments.length)
+    if(this.feedbacks[i].comments.length>mostCommentedFeedback.comments.length && this.feedbacks[i].status === "enabled")
     mostCommentedFeedback = this.feedbacks[i]
     }
     this.mostCommentedFeedback = mostCommentedFeedback
@@ -110,27 +124,6 @@
     const response = await
     FeedbacksService.fetchLastFeedback()
     this.lastFeedback = response.data.feedbacks[0]
-  },
-  async
-  deleteFeedback(id)
-  {
-    const $this = this
-    $this.$swal({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-    }).then(function (res) {
-      if (res.dismiss !== 'cancel') {
-        FeedbacksService.deleteFeedbackById(id)
-      }
-      $this.$router.go({
-        path: '/feedbacks'
-      })
-    })
   }
   }
   }
@@ -138,6 +131,7 @@
 
 
 <style type="text/css">
+
   .table-wrap {
     width: 90%;
     margin: 0 auto;
