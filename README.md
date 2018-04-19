@@ -14,4 +14,5 @@ DEBUG=myapp:* npm start
 ```
 
 All Apis are under this path http://localhost:8001/
+the client part is under this path http://localhost:8000/
 
