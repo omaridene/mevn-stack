@@ -13,5 +13,7 @@ npm run dev
 DEBUG=myapp:* npm start
 ```
 
-  > All Apis are under this path http://localhost:8001/
-  > the client part is under this path http://localhost:8000/
+## informations
+
+* [Client](http://localhost:8000/) - All server Apis are under this path
+* [Server](http://localhost:8001/) - the client part is under this path
