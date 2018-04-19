@@ -1,5 +1,6 @@
 # mevn-stack
-safety-smart city
+
+> A Vue.js and expressJs project about safety in smart cities.
 
 ``` bash
 # install dependencies in client project and server project 
