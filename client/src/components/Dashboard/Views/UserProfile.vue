@@ -35,13 +35,18 @@
         <button type="submit" class="btn btn-info btn-fill float-right">
           Login
         </button>
+
       </div>
       <div class="clearfix"></div>
     </form>
   </card>
         </div>
-        
+        <GoogleLogin client-id="355541983809-imn5j4sg8u5s7eo71r41e0hnln5qhono.apps.googleusercontent.com" v-bind:onsuccess="onSignIn" v-bind:onerror="onError"></GoogleLogin>
+    <GoogleLogout client-id="355541983809-imn5j4sg8u5s7eo71r41e0hnln5qhono.apps.googleusercontent.com" v-bind:logout="logout">Logout</GoogleLogout>
+                    <GoogleLogin client-id="355541983809-imn5j4sg8u5s7eo71r41e0hnln5qhono.apps.googleusercontent.com" v-bind:onsuccess="onSign" v-bind:onerror="onError"></GoogleLogin>
+
       </div>
+
     </div>
   </div>
 </template>
@@ -50,6 +55,8 @@
   import UserCard from './UserProfile/UserCard.vue'
     import Card from 'src/components/UIComponents/Cards/Card.vue'
     import axios from 'axios'
+    import GoogleLogin from './google-login/google-login'
+import GoogleLogout from './google-logout/google-logout'
 
 
   export default {
@@ -57,13 +64,17 @@
     components: {
       EditProfileForm,
       UserCard,
-      Card
+      Card,
+      GoogleLogin,
+      GoogleLogout
     },
     
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      nom: '',
+      email: ''
     }
   },
   beforeRouteEnter (to, from, next) {
@@ -74,6 +85,87 @@
     }
   },
   methods: {
+    async onSign (googleUser) {
+      const profile = googleUser.getBasicProfile()
+      this.msg = `Welcome, ${profile.getName()}, to Our Vue.js App`
+      console.log(`ID: ${profile.getId()}`)
+      console.log(`Name: ${profile.getName()}`)
+      console.log(`Image URL: ${profile.getImageUrl()}`)
+      console.log(`Email: ${profile.getEmail()}`)
+      console.log(`ID Token: ${googleUser.getAuthResponse().id_token}`)
+      localStorage.setItem('nom', `${profile.getName()}`)
+      localStorage.setItem('email', `${profile.getEmail()}`)
+      const BASE_URL = 'http://localhost:8001/user/login'
+      axios.post(BASE_URL , {
+      Email: `${profile.getEmail()}`,
+      password: 'googleauthentication'
+    })
+        .then(response => {
+          //console.log(response.data.tokens[response.data.tokens.length - 1].token)
+            localStorage.setItem('user', JSON.stringify(response.data))
+            console.log(response.data)
+          // localStorage.setItem('token', response.data.tokens[data.tokens.length - 1].token)
+           localStorage.setItem('token',response.data.tokens[response.data.tokens.length - 1].token)
+           this.$router.go({
+          path: '/maps'
+        })
+        })
+        // .then(data => {
+        //   localStorage.setItem('user', JSON.stringify(data))
+        //   localStorage.setItem('token', data.tokens[data.tokens.length - 1].token)
+        //   console.log(data)
+        //    this.$router.push('/')
+        // })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    async onSignIn (googleUser) {
+      const profile = googleUser.getBasicProfile()
+      this.msg = `Welcome, ${profile.getName()}, to Our Vue.js App`
+      console.log(`ID: ${profile.getId()}`)
+      console.log(`Name: ${profile.getName()}`)
+      console.log(`Image URL: ${profile.getImageUrl()}`)
+      console.log(`Email: ${profile.getEmail()}`)
+      console.log(`ID Token: ${googleUser.getAuthResponse().id_token}`)
+      localStorage.setItem('nom', `${profile.getName()}`)
+      localStorage.setItem('email', `${profile.getEmail()}`)
+      this.nom = localStorage.getItem('nom')
+      this.email = localStorage.getItem('email')
+      const BASE_URL = 'http://localhost:8001/user'
+      
+      axios.post(BASE_URL , {
+      Email: `${profile.getEmail()}`,
+        password: 'googleauthentication',
+        firstName: `${profile.getName()}`
+        
+    })
+        .then(response => {
+          
+           this.$router.go({
+          path: '/maps'
+        })
+        })
+        // .then(data => {
+        //   localStorage.setItem('user', JSON.stringify(data))
+        //   localStorage.setItem('token', data.tokens[data.tokens.length - 1].token)
+        //   console.log(data)
+        //    this.$router.push('/')
+        // })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    async onError (error) {
+      console.log(error)
+    },
+    async logout () {
+      this.msg = 'Good Bye from Your Vue.js App'
+      localStorage.setItem('nom', '')
+      localStorage.setItem('email', '')
+      this.nom = ''
+      this.email = ''
+    },
     onSubmit () {
       const formData = {
         Email: this.email,

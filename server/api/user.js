@@ -67,6 +67,17 @@ router.post('/login', function(req, res){
         res.status(400).send(e);
     });
 });
+router.post('/login/Google', function(req, res){
+    // let body = _.pick(req.body, ['email', 'password']);
+
+    User.findByCredentials(req.body.Email).then(function(user) {
+        return user.generateAuthToken().then(function(token) {
+            res.header('Authorization', token).send(user);
+        });
+    }).catch(function(e){
+        res.status(400).send(e);
+    });
+});
 
 router.delete('/logout', function(req, res){
     let token = req.header('Authorization');

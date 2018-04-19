@@ -7,13 +7,13 @@ var UserSchema = new mongoose.Schema({
         type: String, required: true, minlength: 1, trim: true
     },
     lastName:{
-        type: String, required: true, minlength: 1, trim: true
+        type: String, minlength: 1, trim: true
     },
     CIN:{
-        type: String, required: true, maxlength: 8,maxlength: 8, trim: true
+        type: String, maxlength: 8,maxlength: 8, trim: true
     },
     Phone:{
-        type: String, required: true, minlength: 1, trim: true
+        type: String, minlength: 1, trim: true
     },
     Email:{
         type: String, required: true, minlength: 1

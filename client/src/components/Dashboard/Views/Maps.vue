@@ -38,7 +38,10 @@
               <p class="category">Incidents near to that place</p>
             </template> -->
               
-
+<div class="search-wrapper">
+    <input type="text" v-model="search" placeholder="Search title.."/>
+        <label>Search title:</label>
+  </div>
           <table>
             <tr>
               <td> nearest alerts to your</td>
@@ -49,7 +52,7 @@
 </td>
               
             </tr>
-            <tr v-for="i in incidents">
+            <tr v-for="i in filteredList">
               <td><router-link v-bind:to="{ name: 'incident Detail', params: { id: i._id } }">{{i.Title}}</router-link></td>
               <td>{{ i.Description }}</td>
               <td>{{ i.distance }} km</td>
@@ -127,6 +130,7 @@ export default {
       ],
       
         incidents: [],
+         search: '',
         token: localStorage.getItem("token"),
         id : '',
          center: {
@@ -186,7 +190,12 @@ export default {
     computed: {
             appointments() {
               return this.incidents.slice(0).sort((a, b) => a.distance > b.distance ? this.sorting : -this.sorting )
-            }
+            },
+            filteredList() {
+        return this.incidents.filter(post => {
+        return post.Title.toLowerCase().includes(this.search.toLowerCase())
+      })
+    }
         },
   methods: {
     cente (l,id) {
