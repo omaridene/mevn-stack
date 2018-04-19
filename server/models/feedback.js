@@ -1,32 +1,34 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 var Incident = require('./incident')
+var User = require('./user')
+
 
 var addressSchema = new mongoose.Schema({
     place:{
-        type: String, required: true, minlength: 1, trim: true
+        type: String
     },
-    city:{type:String, required: true, minlength: 1, trim: true},
+    city:{type:String},
     coordinates: [Number],
     weight:Number,
 
 });
 var IncidentSchema = new mongoose.Schema({
     Title:{
-        type: String, required: true, minlength: 1, trim: true
+        type: String
     },
     Description:{
-        type: String, required: true, minlength: 1, trim: true
+        type: String
     },
     Date:{
         type:Date,default:Date.now
     },
     address: addressSchema,
     type:{
-        type: String, required: true, minlength: 1, trim: true
+        type: String
     }
 
-    //,createdBy:{type:mongoose.Schema.Types.ObjectId,ref:'User'},
+    // createdBy:{type:mongoose.Schema.Types.ObjectId,ref:'User'},
 });
 
 
@@ -36,19 +38,21 @@ var IncidentSchema = new mongoose.Schema({
 
 var commentSchema = mongoose.Schema({
     content:{type:String},
-    date:{type:Date,default:Date.now}
+    date:{type:Date,default:Date.now},
+    user:{type:mongoose.Schema.Types.ObjectId,ref:'User'},
+
 });
 
 
 var FeedbackSchema = new Schema({
-  title: String,
-  description: String,
-date:{type:Date,default:Date.now()},
+    title: String,
+    description: String,
+    date:{type:Date,default:Date.now},
     comments : [commentSchema],
-    incident : String,
-    degree : {type: Number}
-
-
+    incident : IncidentSchema,
+    degree : Number,
+    user:{type:mongoose.Schema.Types.ObjectId,ref:'User'},
+    status : {type:String,default:'enabled'}
 });
 
 var Feedback = mongoose.model("Feedback", FeedbackSchema);

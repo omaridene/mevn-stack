@@ -46,6 +46,8 @@
           <stats-card>
             <div slot="header" class="icon-info">
               <i class="nc-icon  text-primary"></i>
+              <img style="width: 50px; height: 60px"
+                src="https://cdn3.iconfinder.com/data/icons/risk-insurance-thick-version/33/property_theft__vandalism_insurance-512.png"/>
             </div>
             <div slot="content">
               <p class="card-category">number of all crimes</p>
@@ -58,15 +60,15 @@
       </div>
 
      <div style="position:relative; margin-top: -500px">
-      <button type="button" aria-hidden="true" class="btn" @click="valid2=!valid2" >loadchart</button>
+      <button style="position: relative;left:335px; " type="button" aria-hidden="true" class="btn" @click="valid2=!valid2" >Change chart</button>
 
       <div class="row" style="display: block">
         <div class="col-md-8">
-          <chart-card :chart-data="lineChart.data"
+          <chart-card style="position: relative;left: 50px;margin-top: 30px" :chart-data="lineChart.data"
                       :chart-options="lineChart.options"
                       :responsive-options="lineChart.responsiveOptions" v-if="valid2">
             <template slot="header">
-              <h4 class="card-title">Users Behavior</h4>
+              <h4 class="card-title">Statistics for last 3 years</h4>
               <p class="card-category">24 Hours performance</p>
             </template>
             <template slot="footer">
@@ -85,22 +87,23 @@
 
 
       </div>
-      <button type="button" aria-hidden="true" class="btn" @click="to2016" >statistics for 2016 </button>
+      <div style="position: relative;left:150px;margin-bottom:50px  ">
+       <button type="button" aria-hidden="true" class="btn" @click="to2016" >statistics for 2016 </button>
       <button type="button" aria-hidden="true" class="btn" @click="to2017" >statistics for 2017 </button>
       <button type="button" aria-hidden="true" class="btn" @click="to2018" >statistics for 2018 </button>
-
+      </div>
       <div class="row">
 
         <div class="col-md-6" >
 
-          <chart-card v-if="valid==true"
+          <chart-card style="position: relative;left: 150px" v-if="valid==true"
             :chart-data="barChart.data"
             :chart-options="barChart.options"
             :chart-responsive-options="barChart.responsiveOptions"
             chart-type="Bar">
             <template slot="header">
               <h4 class="card-title">statistics for {{year}}</h4>
-              <p class="card-category">All products including Taxes</p>
+              <p class="card-category"></p>
             </template>
             <template slot="footer">
               <div class="legend">

@@ -1,9 +1,41 @@
 <template>
   <div class="content">
-    <div class="row" style="display: block">
+
+
+
+    <div class='chart'>
+      <table align="right" style="z-index: 100;position: relative" v-if="verifnote">
+        <tr><div class="alert alert-info"><span>are you agree with this predictions :</span></div>
+        </tr>
+        <tr align="left">
+          <td class="btn-round">yes : <input type="radio" name="note" value="1" v-model="note" class="btn-round">
+          </td>
+        </tr>
+        <tr align="left">
+          <td class="btn-round">NO : <input type="radio" name="note" value="0" v-model="note">
+          </td>
+        </tr>
+        <tr align="center">
+          <button @click="addnote" class="btn">save</button>
+        </tr>
+      </table>
+      <!-- import font awesome for legend icons -->
+      <div class="alert alert-info col-md-6"><span>prediction depending feedbacks in {{$route.params.id}}</span></div>
+
+
+      <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+            integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+      <!--
+        Both the :data and :config properties are deeply reactive so any changes
+        to these will cause the chart to update.
+      -->
+      <chart-pie :data='chartData' :config='chartConfig'></chart-pie>
+    </div>
+    <div class="row" style="display: block ; margin-top: 55px" >
       <div>
-choose month to see predictions for today in {{$route.params.id}}
-        <select name="mounth" id="mounth" v-model="mounth" @click="onloade" class="custom-select-sm btn">
+        <div class="alert alert-info col-md-7" ><span>choose month to see predictions for today in {{$route.params.id}}
+        </span><select name="mounth" id="mounth" v-model="mounth" @click="onloade" class="custom-select-sm btn">
           <option value="0" class="btn">JAN</option>
           <option value="1" class="btn">FEV</option>
           <option value="2" class="btn">MAR</option>
@@ -18,6 +50,7 @@ choose month to see predictions for today in {{$route.params.id}}
           <option value="11" class="btn">DEC</option>
 
         </select>
+        </div>
       </div>
 
 
@@ -26,7 +59,7 @@ choose month to see predictions for today in {{$route.params.id}}
                     :chart-options="lineChart.options"
                     :responsive-options="lineChart.responsiveOptions" v-if="valid===true">
           <template slot="header">
-            <h4 class="card-title">Users Behavior</h4>
+            <div class="alert alert-info"><span>prediction for {{$route.params.id}} for {{new Date(2007,mounth,4).get}} </span></div>
             <p class="card-category">24 Hours performance</p>
           </template>
           <template slot="footer">
@@ -43,115 +76,41 @@ choose month to see predictions for today in {{$route.params.id}}
         </chart-card>
       </div>
 
-    <div class="container-fluid">
-      <card>
-        <template slot="header">
-          <h4 class="card-title">Notifications</h4>
-          <p class="card-category">Handcrafted by our friend <a target="_blank" href="https://github.com/cristijora">Cristi Jora</a>. Please checkout the <a
-            href="https://github.com/cristijora/vue-notifyjs" target="_blank">full documentation.</a></p>
 
-        </template>
-        <div class="row">
-          <div class="col-md-6">
-            <h5>Notifications Style</h5>
-            <div class="alert alert-info">
-              <span>This is a plain notification</span>
-            </div>
-            <div class="alert alert-info">
-              <button type="button" aria-hidden="true" class="close">×</button>
-              <span>This is a notification with close button.</span>
-            </div>
-            <div class="alert alert-info alert-with-icon" data-notify="container">
-              <button type="button" aria-hidden="true" class="close">×</button>
-              <span data-notify="icon" class="nc-icon nc-app"></span>
-              <span data-notify="message">This is a notification with close button and icon.</span>
-            </div>
-            <div class="alert alert-info alert-with-icon" data-notify="container">
-              <button type="button" aria-hidden="true" class="close">×</button>
-              <span data-notify="icon" class="nc-icon nc-app"></span>
-              <span data-notify="message">This is a notification with close button and icon and have many lines. You can see that the icon and the close button are always vertically aligned. This is a beautiful notification. So you don't have to worry about the style.</span>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <h5>Notification states</h5>
-            <div class="alert alert-info">
-              <button type="button" aria-hidden="true" class="close">×</button>
-              <span><b> Info - </b> This is a regular notification made with ".alert-info"</span>
-            </div>
-            <div class="alert alert-success">
-              <button type="button" aria-hidden="true" class="close">×</button>
-              <span><b> Success - </b> This is a regular notification made with ".alert-success"</span>
-            </div>
-            <div class="alert alert-warning">
-              <button type="button" aria-hidden="true" class="close">×</button>
-              <span><b> Warning - </b> This is a regular notification made with ".alert-warning"</span>
-            </div>
-            <div class="alert alert-danger">
-              <button type="button" aria-hidden="true" class="close">×</button>
-              <span><b> Danger - </b> This is a     {{braquage}}
-</span>
-            </div>
-          </div>
-        </div>
-        <br>
-        <br>
-        <div class="places-buttons">
-          <div class="row justify-content-center">
-            <div class="col-6 text-center">
-              <h5>Notifications Places
-                <p class="category">Click to view notifications</p>
-              </h5>
-            </div>
-          </div>
-          <div class="row justify-content-center">
-            <div class="col-md-3 col-md-offset-1">
-              <button class="btn btn-default btn-block" @click="notifyVue('top', 'left')">Top Left</button>
-            </div>
-            <div class="col-md-3">
-              <button class="btn btn-default btn-block" @click="notifyVue('top', 'center')">Top Center</button>
-            </div>
-            <div class="col-md-3">
-              <button class="btn btn-default btn-block" @click="notifyVue('top', 'right')">Top Right</button>
-            </div>
-          </div>
-          <div class="row justify-content-center">
-            <div class="col-md-3 col-md-offset-1">
-              <button class="btn btn-default btn-block" @click="notifyVue('bottom', 'left')">Bottom Left</button>
-            </div>
-            <div class="col-md-3">
-              <button class="btn btn-default btn-block" @click="notifyVue('bottom', 'center')">Bottom Center</button>
-            </div>
-            <div class="col-md-3">
-              <button class="btn btn-default btn-block" @click="notifyVue('bottom', 'right')">Bottom Right</button>
-            </div>
-
-          </div>
-        </div>
-      </card>
-
-
-
-
-      </div>
     </div>
+    <br><br><br><br>
+    <VueGoodshare></VueGoodshare>
+
   </div>
+
 </template>
 <script>
+  import VueGoodshare from 'vue-goodshare'
   import Card from 'src/components/UIComponents/Cards/Card.vue'
   import IncidentsService from "../../../services/IncidentsService"
+  import note from "../../../services/note"
+  import FeedbacksService from "../../../services/FeedbacksService"
+  import VueGoodshareFacebook from 'vue-goodshare/src/providers/Facebook.vue'
   import StatsCard from 'src/components/UIComponents/Cards/StatsCard.vue'
   import ChartCard from 'src/components/UIComponents/Cards/ChartCard.vue'
+  import {ChartPie} from 'vue-d2b'
+
   export default {
     components: {
-      Card  ,
+      Card,
       ChartCard,
-      StatsCard
+      StatsCard,
+      ChartPie,
+      VueGoodshareFacebook,
+      VueGoodshare
     },
-    data () {
+    data() {
       return {
-        alerts : [],
-        valid : false,
-        mounth : 0,
+        alerts: [],
+        note: '1',
+        valid: false,
+        mounth: 0,
+        verifnote : true ,
         lineChart: {
           data: {
             labels: ['9:00AM', '12:00AM', '3:00PM', '6:00PM', '9:00PM', '12:00PM', '3:00AM', '6:00AM'],
@@ -180,24 +139,45 @@ choose month to see predictions for today in {{$route.params.id}}
           responsiveOptions: [
             ['screen and (max-width: 640px)', {
               axisX: {
-                labelInterpolationFnc (value) {
+                labelInterpolationFnc(value) {
                   return value[0]
                 }
               }
             }]
           ]
         },
-        braquage : 'azer',
+        braquage: 'azer',
         type: ['', 'info', 'success', 'warning', 'danger'],
         notifications: {
           topCenter: false
-        }
+        },
+        chartData: [
+          {label: 'braquage', value: 23},
+          {label: 'accedints', value: 31},
+          {label: 'crime', value: 80}
+        ],
+
+        // The chart config property is a callback function that is executed
+        // any time the chart undergoes an update. The function receives the
+        // d2b chart generator as an argument and can be configured as described
+        // as described by the d2bjs.org docs.
+        chartConfig(chart) {
+          chart.donutRatio(0.5)
+        },
+        user: JSON.parse(localStorage.getItem('user'))
+
       }
     },
-    mounted(){
+    beforeUpdate(){
+this.getnotes()
+    }
+    ,
+    mounted() {
+      this.loadcharpie(),
+        this.getnotes()
     },
     methods: {
-      notifyVue (verticalAlign, horizontalAlign) {
+      notifyVue(verticalAlign, horizontalAlign) {
         const notification = {
           template: `<span>Welcome to <b>Light Bootstrap Dashboard</b> - a beautiful freebie for every web developer.</span>`
         }
@@ -213,49 +193,89 @@ choose month to see predictions for today in {{$route.params.id}}
           })
       },
 
-      async onloade(){
-        this.valid=!this.valid
+      async onloade() {
+        this.valid = !this.valid
         const response = await IncidentsService.getalertsbydelegation(this.$route.params.id)
         this.alerts = response.data
         this.lineChart.data.series = [
           [
-            this.alerts.filter((a)=>new Date(a.Date).getHours()>9 && a.type==="braquage"&& new Date(a.Date).getHours()<12 && new Date(a.Date).getMonth() ===this.mounth ).length,
-            this.alerts.filter((a)=>new Date(a.Date).getHours()>12 && a.type==="braquage"&& new Date(a.Date).getHours()<15&& new Date(a.Date).getMonth() ===this.mounth).length,
-            this.alerts.filter((a)=>new Date(a.Date).getHours()>15 && a.type==="braquage"&& new Date(a.Date).getHours()<18&& new Date(a.Date).getMonth() ===this.mounth).length,
-            this.alerts.filter((a)=>new Date(a.Date).getHours()>18 && a.type==="braquage"&& new Date(a.Date).getHours()<21&& new Date(a.Date).getMonth() ===this.mounth).length,
-            this.alerts.filter((a)=>new Date(a.Date).getHours()>21 && a.type==="braquage"&& new Date(a.Date).getHours()<24&& new Date(a.Date).getMonth() ===this.mounth).length,
-            this.alerts.filter((a)=>new Date(a.Date).getHours()>0 && a.type==="braquage"&& new Date(a.Date).getHours()<3&& new Date(a.Date).getMonth() ===this.mounth).length,
-            this.alerts.filter((a)=>new Date(a.Date).getHours()>3 && a.type==="braquage"&& new Date(a.Date).getHours()<6&& new Date(a.Date).getMonth() ===this.mounth).length,
-            this.alerts.filter((a)=>new Date(a.Date).getHours()>6 && a.type==="braquage"&& new Date(a.Date).getHours()<9&& new Date(a.Date).getMonth() ===this.mounth).length
+            this.alerts.filter((a) => new Date(a.Date).getHours() > 9 && a.type === "braquage" && new Date(a.Date).getHours() < 12 && new Date(a.Date).getMonth() === this.mounth).length,
+            this.alerts.filter((a) => new Date(a.Date).getHours() > 12 && a.type === "braquage" && new Date(a.Date).getHours() < 15 && new Date(a.Date).getMonth() === this.mounth).length,
+            this.alerts.filter((a) => new Date(a.Date).getHours() > 15 && a.type === "braquage" && new Date(a.Date).getHours() < 18 && new Date(a.Date).getMonth() === this.mounth).length,
+            this.alerts.filter((a) => new Date(a.Date).getHours() > 18 && a.type === "braquage" && new Date(a.Date).getHours() < 21 && new Date(a.Date).getMonth() === this.mounth).length,
+            this.alerts.filter((a) => new Date(a.Date).getHours() > 21 && a.type === "braquage" && new Date(a.Date).getHours() < 24 && new Date(a.Date).getMonth() === this.mounth).length,
+            this.alerts.filter((a) => new Date(a.Date).getHours() > 0 && a.type === "braquage" && new Date(a.Date).getHours() < 3 && new Date(a.Date).getMonth() === this.mounth).length,
+            this.alerts.filter((a) => new Date(a.Date).getHours() > 3 && a.type === "braquage" && new Date(a.Date).getHours() < 6 && new Date(a.Date).getMonth() === this.mounth).length,
+            this.alerts.filter((a) => new Date(a.Date).getHours() > 6 && a.type === "braquage" && new Date(a.Date).getHours() < 9 && new Date(a.Date).getMonth() === this.mounth).length
 
-          ],[
-            this.alerts.filter((a)=>new Date(a.Date).getHours()>9 && a.type==="accident"&& new Date(a.Date).getHours()<12&& new Date(a.Date).getMonth() ===this.mounth).length,
-            this.alerts.filter((a)=>new Date(a.Date).getHours()>12 && a.type==="accident"&& new Date(a.Date).getHours()<15&& new Date(a.Date).getMonth() ===this.mounth).length,
-            this.alerts.filter((a)=>new Date(a.Date).getHours()>15 && a.type==="accident"&& new Date(a.Date).getHours()<18&& new Date(a.Date).getMonth() ===this.mounth).length,
-            this.alerts.filter((a)=>new Date(a.Date).getHours()>18 && a.type==="accident"&& new Date(a.Date).getHours()<21&& new Date(a.Date).getMonth() ===this.mounth).length,
-            this.alerts.filter((a)=>new Date(a.Date).getHours()>21 && a.type==="accident"&& new Date(a.Date).getHours()<24&& new Date(a.Date).getMonth() ===this.mounth).length,
-            this.alerts.filter((a)=>new Date(a.Date).getHours()>0 && a.type==="accident"&& new Date(a.Date).getHours()<3&& new Date(a.Date).getMonth() ===this.mounth).length,
-            this.alerts.filter((a)=>new Date(a.Date).getHours()>3 && a.type==="accident"&& new Date(a.Date).getHours()<6&& new Date(a.Date).getMonth() ===this.mounth).length,
-            this.alerts.filter((a)=>new Date(a.Date).getHours()>6 && a.type==="accident"&& new Date(a.Date).getHours()<9&& new Date(a.Date).getMonth() ===this.mounth).length
+          ], [
+            this.alerts.filter((a) => new Date(a.Date).getHours() > 9 && a.type === "accident" && new Date(a.Date).getHours() < 12 && new Date(a.Date).getMonth() === this.mounth).length,
+            this.alerts.filter((a) => new Date(a.Date).getHours() > 12 && a.type === "accident" && new Date(a.Date).getHours() < 15 && new Date(a.Date).getMonth() === this.mounth).length,
+            this.alerts.filter((a) => new Date(a.Date).getHours() > 15 && a.type === "accident" && new Date(a.Date).getHours() < 18 && new Date(a.Date).getMonth() === this.mounth).length,
+            this.alerts.filter((a) => new Date(a.Date).getHours() > 18 && a.type === "accident" && new Date(a.Date).getHours() < 21 && new Date(a.Date).getMonth() === this.mounth).length,
+            this.alerts.filter((a) => new Date(a.Date).getHours() > 21 && a.type === "accident" && new Date(a.Date).getHours() < 24 && new Date(a.Date).getMonth() === this.mounth).length,
+            this.alerts.filter((a) => new Date(a.Date).getHours() > 0 && a.type === "accident" && new Date(a.Date).getHours() < 3 && new Date(a.Date).getMonth() === this.mounth).length,
+            this.alerts.filter((a) => new Date(a.Date).getHours() > 3 && a.type === "accident" && new Date(a.Date).getHours() < 6 && new Date(a.Date).getMonth() === this.mounth).length,
+            this.alerts.filter((a) => new Date(a.Date).getHours() > 6 && a.type === "accident" && new Date(a.Date).getHours() < 9 && new Date(a.Date).getMonth() === this.mounth).length
 
-          ],[
-            this.alerts.filter((a)=>new Date(a.Date).getHours()>9 && a.type==="crime"&& new Date(a.Date).getHours()<12).length,
-            this.alerts.filter((a)=>new Date(a.Date).getHours()>12 && a.type==="crime"&& new Date(a.Date).getHours()<15).length,
-            this.alerts.filter((a)=>new Date(a.Date).getHours()>15 && a.type==="crime"&& new Date(a.Date).getHours()<18).length,
-            this.alerts.filter((a)=>new Date(a.Date).getHours()>18 && a.type==="crime"&& new Date(a.Date).getHours()<21).length,
-            this.alerts.filter((a)=>new Date(a.Date).getHours()>21 && a.type==="crime"&& new Date(a.Date).getHours()<24).length,
-            this.alerts.filter((a)=>new Date(a.Date).getHours()>0 && a.type==="crime"&& new Date(a.Date).getHours()<3).length,
-            this.alerts.filter((a)=>new Date(a.Date).getHours()>3 && a.type==="crime"&& new Date(a.Date).getHours()<6).length,
-            this.alerts.filter((a)=>new Date(a.Date).getHours()>6 && a.type==="crime"&& new Date(a.Date).getHours()<9).length
+          ], [
+            this.alerts.filter((a) => new Date(a.Date).getHours() > 9 && a.type === "crime" && new Date(a.Date).getHours() < 12).length,
+            this.alerts.filter((a) => new Date(a.Date).getHours() > 12 && a.type === "crime" && new Date(a.Date).getHours() < 15).length,
+            this.alerts.filter((a) => new Date(a.Date).getHours() > 15 && a.type === "crime" && new Date(a.Date).getHours() < 18).length,
+            this.alerts.filter((a) => new Date(a.Date).getHours() > 18 && a.type === "crime" && new Date(a.Date).getHours() < 21).length,
+            this.alerts.filter((a) => new Date(a.Date).getHours() > 21 && a.type === "crime" && new Date(a.Date).getHours() < 24).length,
+            this.alerts.filter((a) => new Date(a.Date).getHours() > 0 && a.type === "crime" && new Date(a.Date).getHours() < 3).length,
+            this.alerts.filter((a) => new Date(a.Date).getHours() > 3 && a.type === "crime" && new Date(a.Date).getHours() < 6).length,
+            this.alerts.filter((a) => new Date(a.Date).getHours() > 6 && a.type === "crime" && new Date(a.Date).getHours() < 9).length
           ]]
+      },
 
+      async loadcharpie() {
+        console.log('ddddd')
+        const response = await FeedbacksService.fetchFeedbacks()
+        this.chartData = [
+          {
+            label: 'braquage',
+            value: response.data.feedbacks.filter((a) => a.degree > 2 && a.incident.type === "braquage").length
+          },
+          {
+            label: 'accedints',
+            value: response.data.feedbacks.filter((a) => a.degree > 2 && a.incident.type === "accident").length
+          },
+          {
+            label: 'crime',
+            value: response.data.feedbacks.filter((a) => a.degree > 2 && a.incident.type === "crime").length
+          }
 
+        ]
+      },
+      async addnote() {
+        await
+          note.addnote({
+            delegation : this.$route.params.id,
+            user: this.user._id,
+            status : this.note
+          })
+        this.$swal(
+          'Great!',
+          `Your Note has been added!`,
+          'success'
+        )
+      },
+      async getnotes(){
+        const responce = await note.fetchNotess()
+if (responce.data.Notes.filter((a)=>a.delegation=== this.$route.params.id).length >0)
+{this.verifnote= false}
+        console.log(responce.data.Notes.filter((a)=>a.delegation=== this.$route.params.id).length + 'testici')
 
       }
+
     }
   }
 
 </script>
 <style lang="scss">
-
+  .chart {
+    height: 500px;
+  }
 </style>

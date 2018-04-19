@@ -10,7 +10,9 @@ var users = require('./routes/users');
 var feedbacks = require('./routes/feedbacks');
 var incidents = require('./routes/incidents');
 var alerts = require('./routes/show_alerts_with_delgation');
+var User = require('./api/user');
 
+var note = require('./routes/note');
 
 var app = express();
 const cors = require('cors')
@@ -49,6 +51,8 @@ app.use('/alerts', alerts);
 app.use('/incidents', incidents);
 app.use('/index', index);
 app.use('/users', users);
+app.use('/user', User);
+app.use('/note', note);
 
 
 // catch 404 and forward to error handler
