@@ -8,10 +8,34 @@
 
 
       <div>
+      <div>
         <input type="text" name="title" placeholder="TITLE" v-model="title">
       </div>
 
-      <div>
+        <div style=" width: 500px ;height: 200px;margin: auto"  >
+
+          <tr>
+            <td><img class="smile" src="https://res.cloudinary.com/turdlife/image/upload/v1492864443/sad_bj1tuj.svg"/>
+            </td>
+            <td><img class="smile" src="https://res.cloudinary.com/turdlife/image/upload/v1492864443/neutral_t3q8hz.svg"/>
+            </td>
+            <td><img class="smile" src="https://res.cloudinary.com/turdlife/image/upload/v1492864443/happy_ampvnc.svg"/>
+            </td>
+          </tr>
+
+
+          <tr>
+            <td><input type="radio" name="smiley" value="1" v-model="smile" >
+            </td>
+            <td><input type="radio" name="smiley" value="2" checked="checked" v-model="smile">
+            </td>
+            <td><input type="radio" name="smiley" value="3" v-model="smile"  >
+            </td>
+          </tr>
+
+        </div>
+
+
         <select v-model="selected" style="width:48%">
           <option v-for="(incident, index) in incidents" v-bind:selected="index === 0">{{incident.Title}}</option>
         </select>
@@ -66,6 +90,7 @@
         user: JSON.parse(localStorage.getItem('user')),
         title: '',
         description: '',
+        smile : '2',
         errors: [],
         incidents: [],
         selected: '',
@@ -128,13 +153,21 @@
     this.errors = []
     if (!this.title) this.errors.push('Title required.')
     if (!this.description) this.errors.push('Description required.')
+    if (!this.selected) this.errors.push('Incident subject required.')
+    if (this.errors.length > 0)
+      this.$swal(
+        'Erreur!',
+        `you need to fill all blanks!`,
+        'error'
+      )
     if (this.errors.length <= 0) {
       await
       FeedbacksService.addFeedback({
         title: this.title,
         description: this.description,
         incident: this.selected,
-        user: this.user
+        user: this.user,
+        degree : this.smile
       })
       this.$swal(
         'Great!',
@@ -202,4 +235,15 @@
   #map {
     min-height: calc(100vh - 123px);
   }
+
+  .smile {
+    width: 50px;
+    height: 50px;
+    margin: 50px;
+  }
+
+  input[type="radio"] {
+    width: 50px;
+  }
+
 </style>

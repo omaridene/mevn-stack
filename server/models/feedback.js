@@ -50,7 +50,8 @@ date:{type:Date,default:Date.now},
     comments : [commentSchema],
     incident : IncidentSchema,
     user:{type:mongoose.Schema.Types.ObjectId,ref:'User'},
-    status : {type:String,default:'enabled'}
+    status : {type:String,default:'enabled'},
+    degree : Number
 
 });
 

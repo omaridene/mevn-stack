@@ -18,7 +18,7 @@
         <tr v-for="feedback in feedbacks" v-if="user._id === feedback.user._id" >
 
           <td v-bind:class="[feedback.status === status ? disabledClass :  enabledClass]" >
-            <router-link v-bind:to="{ name: 'Feedback Detail', params: { id: feedback._id } }">{{feedback.title}}
+            <router-link style="color: white" v-bind:to="{ name: 'Feedback Detail', params: { id: feedback._id } }">{{feedback.title}}
             </router-link>
           </td>
           <td v-bind:class="[feedback.status === status ? disabledClass :  enabledClass]">{{ feedback.description }}</td>

@@ -12,6 +12,7 @@ router.post('/addFeedback', (req, res) => {
 var title = req.body.title;
 var description = req.body.description;
 var user = req.body.user._id;
+var degree = req.body.degree;
 console.log(req.body)
 Incident.findOne({Title:req.body.incident}, '', function (error, incident) {
     if (error) { console.error(error); }
@@ -22,7 +23,8 @@ Incident.findOne({Title:req.body.incident}, '', function (error, incident) {
         description: description,
         incident : incident,
         user : user ,
-        status : 'enabled'
+        status : 'enabled',
+        degree : degree
     })
 
     new_feedback.save(function (error) {
@@ -97,6 +99,8 @@ Feedback.findById(req.params.id, '', function (error, feedback) {
 
     feedback.title = req.body.title
     feedback.description = req.body.description
+    feedback.degree = req.body.degree
+
     feedback.save(function (error) {
         if (error) {
             console.log(error)
