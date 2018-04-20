@@ -49,14 +49,20 @@
           <td width="120">Published by</td>
           <td width="300">Title</td>
           <td width="650">Description</td>
+          <td width="50">Report</td>
         </tr>
-        <tr v-for="feedback in feedbacks" class="feedback" :title=feedback.date v-if="feedback.status === enabled">
+        <tr v-for="feedback in feedbacks" class="feedback" :title=feedback.date v-if="feedback.status === enabled && feedback.reports < 6">
           <td>{{feedback.user.firstName}} {{feedback.user.lastName}}</td>
-          <td>
+          <td >
             <router-link v-bind:to="{ name: 'Feedback Detail', params: { id: feedback._id } }">{{feedback.title}}
             </router-link>
           </td>
           <td>{{ feedback.description }}</td>
+          <td><div class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-6" v-if="user !=null">
+            <div class="font-icon-detail">
+              <i class="nc-icon nc-simple-remove" style="color: red" @click="report(feedback._id)" ></i>
+            </div>
+          </div> </td>
 
         </tr>
       </table>
@@ -84,12 +90,16 @@
     data() {
       return {
         feedbacks: [],
+        myReportedFeedback : [],
         lastFeedback: '',
         mostCommentedFeedback: '',
         token: localStorage.getItem('token'),
         user: JSON.parse(localStorage.getItem('user')),
         enabled : "enabled"
       }
+    },
+    beforeUpdate(){
+
     },
     mounted() {
       this.getFeedbacks(),
@@ -124,7 +134,48 @@
     const response = await
     FeedbacksService.fetchLastFeedback()
     this.lastFeedback = response.data.feedbacks[0]
-  }
+  },
+    async report(idF){
+    const response = await FeedbacksService.getAllReportedFeedbacksByUser(this.user._id)
+      const $this = this
+    $this.$swal({
+        title: 'Are you sure about to report this feedback ?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, report it!'
+      }).then(function (res) {
+        if (res.dismiss !== 'cancel') {
+
+          $this.myReportedFeedback = response.data.reports
+          var test =false;
+          for (var i=0;i<$this.myReportedFeedback.length;i++){
+            if ($this.myReportedFeedback[i].feedback === idF)
+            test=true
+          }
+          if (test === false)  {FeedbacksService.reportFeedback(idF,$this.user._id)
+            $this.$router.go({
+              path: '/feedbacks'
+            })
+          }
+          else {
+            $this.$swal(
+              'Erreur!',
+              `You have already reported this feedback!`,
+              'error'
+            )
+          }
+        }
+
+      })
+
+    },
+
+
+
+
   }
   }
 </script>

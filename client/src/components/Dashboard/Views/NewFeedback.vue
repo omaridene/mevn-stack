@@ -2,6 +2,8 @@
   <div class="feedback">
     <div class="form">
       <h1>Add Feedback</h1>
+      <p>Thumbs-up icon: <span class="glyphicon glyphicon-thumbs-up"></span></p>
+
       <p v-if="errors.length">
         <b>Please correct the following error(s):</b>
       <p v-for="error in errors">{{ error }}</p>
@@ -11,6 +13,7 @@
       <div>
         <input type="text" name="title" placeholder="TITLE" v-model="title">
       </div>
+
 
         <div style=" width: 500px ;height: 200px;margin: auto"  >
 
@@ -76,7 +79,10 @@
   import {API_KEY} from './Maps/API_KEY'
   import Vue from 'vue'
   import * as VueGoogleMaps from 'vue2-google-maps'
+  import BootstrapVue from 'bootstrap-vue'
 
+
+  Vue.use(BootstrapVue);
   Vue.use(VueGoogleMaps, {
     load: {
       key: API_KEY
@@ -203,6 +209,7 @@
   }
   }
 </script>
+
 <style type="text/css">
   .form input, .form textarea {
     width: 500px;

@@ -58,6 +58,8 @@
   import LTable from 'src/components/UIComponents/Table.vue'
   import Checkbox from 'src/components/UIComponents/Inputs/Checkbox.vue'
 
+
+
   export default {
     components: {
       StatsCard

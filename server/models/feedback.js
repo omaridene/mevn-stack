@@ -51,7 +51,8 @@ date:{type:Date,default:Date.now},
     incident : IncidentSchema,
     user:{type:mongoose.Schema.Types.ObjectId,ref:'User'},
     status : {type:String,default:'enabled'},
-    degree : Number
+    degree : Number,
+    reports :{type:Number,default:0}
 
 });
 

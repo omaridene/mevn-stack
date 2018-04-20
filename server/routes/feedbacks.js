@@ -3,6 +3,8 @@ var router = express.Router();
 var Feedback = require("../models/feedback");
 var Incident = require("../models/incident");
 var User = require("../models/user");
+var ReportFeedback = require("../models/reportFeedback");
+
 
 
 
@@ -53,6 +55,49 @@ router.get('/getAllFeedbacks', (req, res) => {
 })
 
 
+// Fetch all feedbacksreports
+router.get('/getAllreports/:idU', (req, res) => {
+    ReportFeedback.find({'user':req.params.idU},'feedback', function (error, feedbacks){
+    if (error) { console.error(error); }
+    res.send({
+        reports: feedbacks
+    })
+})
+})
+
+
+
+
+// report feedback
+router.post('/reportFeedback/:idF/:idU', (req, res) => {
+    var user = req.params.idU;
+    var feedback = req.params.idF;
+var reportFeedback = new ReportFeedback({
+    user: user,
+    feedback: feedback
+
+})
+reportFeedback.save(function (error) {
+    if (error) {
+        console.log(error)
+    }
+    Feedback.findById(req.params.idF, '', function (error, feedback) {
+        if (error) { console.error(error); }
+
+        feedback.reports = feedback.reports + 1 ;
+
+
+        feedback.save(function (error) {
+            if (error) {
+                console.log(error)
+            }
+            res.send({
+                success: true
+            })
+        })
+    })
+})
+})
 
 
 
