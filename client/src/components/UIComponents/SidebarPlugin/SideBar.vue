@@ -40,7 +40,7 @@
     props: {
       title: {
         type: String,
-        default: 'Safety'
+        default: 'SAFETY'
       },
       backgroundColor: {
         type: String,

@@ -73,7 +73,7 @@
       },
       async getAllIncidents () {
         this.incidents = []
-        const response = await IncidentsService.fetchAll()
+        const response = await IncidentsService.fetchIncidents()
         this.incidents = response.data.incidents
         }
     }

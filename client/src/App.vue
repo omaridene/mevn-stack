@@ -1,6 +1,6 @@
 <template>
   <div :class="{'nav-open': $sidebar.showSidebar}">
-
+    <notifications></notifications>
     <router-view></router-view>
   </div>
 </template>
@@ -9,7 +9,10 @@
   export default {}
 </script>
 <style lang="scss">
-  
+  .vue-notifyjs.notifications{
+    .list-move {
+      transition: transform 0.3s, opacity 0.4s;
+    }
     .list-item {
       display: inline-block;
       margin-right: 10px;
@@ -31,5 +34,5 @@
       opacity: 0;
       transform: scale(1.2, 0.7);
     }
-  
+  }
 </style>

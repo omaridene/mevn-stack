@@ -144,16 +144,16 @@ mounted : function() {
           lng: position.coords.longitude
         };
       });
-    },
-    searchLocation: function() {
-      var geocoder = new google.maps.Geocoder();
-      geocoder.geocode({'address': this.searchAddressInput}, (results, status) => {
-        if (status === 'OK') {
-          this.currentLocation.lat = results[0].geometry.location.lat();
-          this.currentLocation.lng = results[0].geometry.location.lng();
-        }
-      });
     }
+    //searchLocation: function() {
+      //var geocoder = new google.maps.Geocoder();
+      // geocoder.geocode({'address': this.searchAddressInput}, (results, status) => {
+        // if (status === 'OK') {
+          //   this.currentLocation.lat = results[0].geometry.location.lat();
+          //  this.currentLocation.lng = results[0].geometry.location.lng();
+          //   }
+          //});
+          //  }
     
 
     }

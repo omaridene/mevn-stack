@@ -9,12 +9,19 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var feedbacks = require('./routes/feedbacks');
 var incidents = require('./routes/incidents');
+var Incident = require('./api/incident');
+var Delegation = require('./api/delegation');
+var User = require('./api/user');
 var io = require('socket.io');
-
 var app = express();
 const cors = require('cors')
 const morgan = require('morgan')
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/piStack');
@@ -45,6 +52,17 @@ app.use('/', feedbacks);
 app.use('/incidents', incidents);
 app.use('/index', index);
 app.use('/users', users);
+app.use('/incident', Incident);
+app.use('/delegation', Delegation);
+app.use('/user', User);
+
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
 
 /*
 * Initialise Pusher
@@ -55,14 +73,6 @@ const pusher = new Pusher({
   secret:'5c7cb4607042109ddccb',
   cluster:'eu'
 });
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
-
 
 // error handler
 app.use(function(err, req, res, next) {
