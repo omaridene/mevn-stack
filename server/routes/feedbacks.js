@@ -8,10 +8,10 @@ var User = require("../models/user");
 
 // Add new feedback
 router.post('/addFeedback', (req, res) => {
-    var db = req.db
-var title = req.body.title
-var description = req.body.description
-var user = req.body.user._id
+    var db = req.db;
+var title = req.body.title;
+var description = req.body.description;
+var user = req.body.user._id;
 console.log(req.body)
 Incident.findOne({Title:req.body.incident}, '', function (error, incident) {
     if (error) { console.error(error); }

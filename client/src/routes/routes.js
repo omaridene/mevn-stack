@@ -16,6 +16,7 @@ import FeedbackDetail from 'src/components/Dashboard/Views/FeedBackDetail.vue'
 import test from 'src/components/Dashboard/Views/test.vue'
 import TableList from 'src/components/Dashboard/Views/TableList'
 import prediction from 'src/components/Dashboard/Views/prediction'
+import MyFeedbacks from 'src/components/Dashboard/Views/MyFeedback.vue'
 
 const routes = [
   {
@@ -70,6 +71,12 @@ const routes = [
         path: 'statistics',
         name: 'statistics',
         component: Statistics
+      },
+      {
+        path: 'feedbacks/myfeedback',
+        name: 'MyFeedback',
+        component: MyFeedbacks
+
       },
       {
         path: 'icons',

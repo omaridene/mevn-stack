@@ -15,6 +15,9 @@ export default {
   },
   getalertsbydelegation (params) {
     return Api().get('alerts/alerts/' + params)
+  },
+  fetchIncidentByTitle (title) {
+    return Api().get('incidents/getIncidentByTitle/'+title)
   }
 
 }

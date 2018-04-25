@@ -4,21 +4,33 @@
 
 
     <div class='chart'>
-      <table align="right" style="z-index: 100;position: relative" v-if="verifnote">
-        <tr><div class="alert alert-info"><span>are you agree with this predictions :</span></div>
+      <table align="right" style="z-index: 100;position: relative" >
+        <tr v-if="verifnote"><div class="alert alert-info"><span>are you agree with this predictions :</span></div>
         </tr>
-        <tr align="left">
+        <tr align="left" v-if="verifnote">
           <td class="btn-round">yes : <input type="radio" name="note" value="1" v-model="note" class="btn-round">
           </td>
         </tr>
-        <tr align="left">
+        <tr align="left" v-if="verifnote">
           <td class="btn-round">NO : <input type="radio" name="note" value="0" v-model="note">
           </td>
         </tr>
-        <tr align="center">
+        <tr align="center" v-if="verifnote">
           <button @click="addnote" class="btn">save</button>
         </tr>
+<tr>
+  <br>
+  <div class="alert alert-success"><span>number of positive votes : {{   nbrnotes}}
+</span></div>
+</tr>
+
+        <tr>
+          <br>
+          <div class="alert alert-danger"><span>number of negative   votes : {{   nbrnotesf}}
+</span></div>
+        </tr>
       </table>
+
       <!-- import font awesome for legend icons -->
       <div class="alert alert-info col-md-6"><span>prediction depending feedbacks in {{$route.params.id}}</span></div>
 
@@ -107,7 +119,9 @@
     data() {
       return {
         alerts: [],
-        note: '1',
+        note: 1,
+        nbrnotes : 0 ,
+        nbrnotesf : 0,
         valid: false,
         mounth: 0,
         verifnote : true ,
@@ -236,15 +250,15 @@ this.getnotes()
         this.chartData = [
           {
             label: 'braquage',
-            value: response.data.feedbacks.filter((a) => a.degree > 2 && a.incident.type === "braquage").length
+            value: response.data.feedbacks.filter((a) => a.degree > 2 && a.incident.type === "braquage" && a.incident.address.place===this.$route.params.id ).length
           },
           {
             label: 'accedints',
-            value: response.data.feedbacks.filter((a) => a.degree > 2 && a.incident.type === "accident").length
+            value: response.data.feedbacks.filter((a) => a.degree > 2 && a.incident.type === "accident" && a.incident.address.place===this.$route.params.id).length
           },
           {
             label: 'crime',
-            value: response.data.feedbacks.filter((a) => a.degree > 2 && a.incident.type === "crime").length
+            value: response.data.feedbacks.filter((a) => a.degree > 2 && a.incident.type === "crime" && a.incident.address.place===this.$route.params.id).length
           }
 
         ]
@@ -264,6 +278,9 @@ this.getnotes()
       },
       async getnotes(){
         const responce = await note.fetchNotess()
+        this.nbrnotes= responce.data.Notes.filter((a)=>a.status===1 && a.delegation=== this.$route.params.id).length
+        this.nbrnotesf= responce.data.Notes.filter((a)=>a.status===0 && a.delegation=== this.$route.params.id).length
+
 if (responce.data.Notes.filter((a)=>a.delegation=== this.$route.params.id).length >0)
 {this.verifnote= false}
         console.log(responce.data.Notes.filter((a)=>a.delegation=== this.$route.params.id).length + 'testici')

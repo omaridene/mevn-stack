@@ -87,7 +87,7 @@
 
 
       </div>
-      <div style="position: relative;left:150px;margin-bottom:50px  ">
+      <div >
        <button type="button" aria-hidden="true" class="btn" @click="to2016" >statistics for 2016 </button>
       <button type="button" aria-hidden="true" class="btn" @click="to2017" >statistics for 2017 </button>
       <button type="button" aria-hidden="true" class="btn" @click="to2018" >statistics for 2018 </button>

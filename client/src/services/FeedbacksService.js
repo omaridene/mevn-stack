@@ -4,7 +4,12 @@ export default {
   fetchFeedbacks () {
     return Api().get('getAllFeedbacks')
   },
-
+  fetchLastFeedback () {
+    return Api().get('getLastFeedback')
+  },
+  getFeedbackIncidentLatLong (place) {
+    return Api().get('/feedback/incident/'+place)
+  },
   addFeedback (params) {
     return Api().post('addFeedback', params)
   },
@@ -18,9 +23,18 @@ export default {
   },
 
   deleteFeedbackById (id) {
-    return Api().delete('feedback/' + id)
+    return Api().put('delete/feedback/' + id)
   },
   addCommentToFeedback (id, params) {
     return Api().put('/feedback/' + id + '/addComment', params)
+  },
+  deleteComment (idComment, idFeedback) {
+    return Api().get('feedback/' + idFeedback + '/deleteComment/' + idComment)
+  },
+  getCommentFromFeedback (idComment, idFeedback) {
+    return Api().get('feedback/' + idFeedback + '/getComment/' + idComment)
+  },
+  updateComment (idComment, idFeedback,content) {
+    return Api().get('feedback/' + idFeedback + '/updateComment/' + idComment+'/'+content)
   }
 }
