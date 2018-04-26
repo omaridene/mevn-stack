@@ -1,6 +1,8 @@
 <template>
 <div class="content">
     <div class="container-fluid">
+      <h2 class="table-wrap">Incident detail</h2>
+      <hr>
         <div class="row">
             <div class="col-md-8">
                 <gmap-map
@@ -15,62 +17,19 @@
                     v-for="(m, index) in markers"
                     :position="m.position"
                     :clickable="true"
-                    :draggable="false"
+                    :draggable="true"
                     @click="center=m.position"
-                    ><gmap-info-window :position="m.position">
-                     {{title}}            </gmap-info-window></gmap-marker>
-                    <gmap-marker
-                    :key="index"
-                    v-for="(m, index) in markers"
-                    :position="{lat:36.8708964, lng:10.19904489999999}"
-                    :clickable="true"
-                    :draggable="false"
-                    @click="center=m.position"
-                    ><gmap-info-window :position="{lat:36.8708964, lng:10.19904489999999}">
-                      Poste de Police - Borj Louzir
-                    </gmap-info-window>
-                  </gmap-marker>
-                  <gmap-marker
-                  :key="index"
-                  v-for="(m, index) in markers"
-                  :position="{lat:36.8814561, lng:10.184978300000012}"
-                  :clickable="true"
-                  :draggable="false"
-                  @click="center=m.position"
-                  ><gmap-info-window :position="{lat:36.8814561, lng:10.184978300000012}">
-                    Poste de Police - Al Ghazela               </gmap-info-window>
-                </gmap-marker>
-                <gmap-marker
-                :key="index"
-                v-for="(m, index) in markers"
-                :position="{lat:36.890404333208004, lng:10.182234942722744}"
-                :clickable="true"
-                :draggable="false"
-                @click="center=m.position"
-                ><gmap-info-window :position="{lat:36.890404333208004, lng:10.182234942722744}">
-                  Protection civile - Al Ghazela               </gmap-info-window>
-              </gmap-marker>
-
-
-
-
-
-
-
-
-
-
-                    
+                    ></gmap-marker>
                 </gmap-map>
             </div>
             <div class="col-md-4">
             <card>
                 <template slot="header">
                 <h4 class="card-title">{{title}}</h4>
-                <p class="card-category">{{date | moment("dddd, MMMM Do YYYY")}}</p>
+                <p class="card-category">{{date}}</p>
                 </template>
                 <div class="typo-line">
-                <h3><p class="category">DESCRIPTION</p>{{description}}</h3>
+                <p class="category">DESCRIPTION</p>{{description}}
                 </div>
                 <div class="typo-line">
                 <h6><p class="category">Place</p>{{place}}</h6>
@@ -93,6 +52,7 @@
   import {API_KEY} from './Maps/API_KEY'
   import Vue from 'vue'
   import * as VueGoogleMaps from 'vue2-google-maps'
+  import LTable from 'src/components/UIComponents/Table.vue'
 
 
   Vue.use(VueGoogleMaps, {
@@ -102,7 +62,8 @@
   })
   export default {
       components: {
-      Card
+      Card,
+      LTable
     },
     data () {
       return {
@@ -164,20 +125,20 @@
     },
   methods: {
       async getIncidentId () {
-        const response = await IncidentsService.getIncidentDetails({
+        const response = await IncidentsService.getIncidentById({
           id: this.$route.params.id
         })
-        //console.log(response.data.address.coordinates[0]+" / "+response.data.address.coordinates[1])
-        this.title = response.data.title
-        this.description = response.data.description
-        this.date = response.data.date
+        console.log(response.data.address.coordinates[0]+" / "+response.data.address.coordinates[1])
+        this.title = response.data.Title
+        this.description = response.data.Description
+        this.date = response.data.Date
         this.type = response.data.type
         this.place = response.data.address.place
         this.city = response.data.address.city
-        this.markers.push({position: {lat: response.data.address.lat, lng: response.data.address.lng}})
+        this.markers.push({position: {lat: response.data.address.coordinates[0], lng: response.data.address.coordinates[1]}})
         this.center = {
-          lat: response.data.address.lat,
-          lng: response.data.address.lng
+          lat: response.data.address.coordinates[0],
+          lng: response.data.address.coordinates[1]
         }
         
       }

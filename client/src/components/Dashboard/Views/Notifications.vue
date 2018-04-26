@@ -38,11 +38,19 @@
             <div class="col-sm-7 comment-section">
              <p><strong>Description:</strong> {{i.description}}</p>
             </div>
+            
           </div>        
         </a>
 
       </div>
-    </div>    
+      <!-- <v-pagination :total="3" v-model="currentPage"></v-pagination>  -->
+      <!-- <pagination :current-page="currentPage"
+            :total-items="totalItems"
+            :items-per-page="itemsPerPage"
+            @page-changed="handleIt">
+</pagination> -->
+    </div>   
+   
   
     
 
@@ -55,7 +63,10 @@
           <label for="description">Description:</label>
           <input v-model="description" class="form-control" type="text">
        
-        <button :disabled="!title || !description" type="submit" class="btn btn-default" >Submit</button>
+        <button :disabled="!title || !description" type="submit" class="btn btn-default"  v-popover:foo>Submit</button>
+        <popover name="foo" :width="120">
+          <a href="#">Confirm report!</a>
+      </popover>
       </form>
 
       <div class="search" hidden>
@@ -80,8 +91,20 @@
   import IncidentsService from '@/services/IncidentsService'
   import Pusher from 'pusher-js'
 
+ 
+
   export default {
+
     name: 'incidents',
+  
+    props: {
+    'name': String,
+    'value': null,
+    'id': String,
+    'disabled': Boolean,
+    'required': Boolean
+  },
+    
     data () {
       return {
         incidents: [],
@@ -105,12 +128,15 @@ mounted : function() {
     this.geolocation();
  },
 
+ 
+
   watch: {
     '$route': 'getIncidents'
   },
     methods: {
+    
       async getIncidents () {
-        const response = await IncidentsService.fetchAll()
+        const response = await IncidentsService.fetchIncidents()
         this.incidents = response.data
       },
       addIncident () {
@@ -214,6 +240,10 @@ h5 {
   .comment-section {
     padding: 20px;
   }
+
+
+
+
 </style>
 
 

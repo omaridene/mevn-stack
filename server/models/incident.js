@@ -1,6 +1,5 @@
 
 var mongoose = require('mongoose');
-//var user = require('./../models/user');
 
 var addressSchema = new mongoose.Schema({
     place:{
@@ -12,20 +11,20 @@ var addressSchema = new mongoose.Schema({
     
 });
 var IncidentSchema = new mongoose.Schema({
-    title:{
+    Title:{
         type: String, required: true, minlength: 1, trim: true
     },
-    description:{
+    Description:{
         type: String, required: true, minlength: 1, trim: true
     },
-    date:{
+    Date:{
         type:Date,default:Date.now
     },
-    address: {lat:{type: Number, default:36.8984667}  ,lng: {type: Number, default: 10.1897982}, place: {type:String, default:"ghazela" }, city: {type:String, default:"ariana" } },
+    address: addressSchema,
     type:{
         type: String, required: true, minlength: 1, trim: true
     }
 
-   //,createdBy:{type:mongoose.Schema.Types.ObjectId,ref:'User'},
+ //  ,createdBy:{type:mongoose.Schema.Types.ObjectId,ref:'User'},
 });
 module.exports= mongoose.model('Incident',IncidentSchema);
