@@ -6,22 +6,24 @@ import NotFound from '../components/GeneralViews/NotFoundPage.vue'
 import Overview from 'src/components/Dashboard/Views/Home.vue'
 import UserProfile from 'src/components/Dashboard/Views/UserProfile.vue'
 import Feedbacks from 'src/components/Dashboard/Views/Feedbacks.vue'
-import Typography from 'src/components/Dashboard/Views/Statistics.vue'
+import Statistics from 'src/components/Dashboard/Views/Statistics.vue'
 import Icons from 'src/components/Dashboard/Views/Icons.vue'
 import Maps from 'src/components/Dashboard/Views/Maps.vue'
 import Notifications from 'src/components/Dashboard/Views/Notifications.vue'
 import NewFeedBack from 'src/components/Dashboard/Views/NewFeedback.vue'
 import EditFeedBack from 'src/components/Dashboard/Views/EditFeedback.vue'
 import FeedbackDetail from 'src/components/Dashboard/Views/FeedBackDetail.vue'
+import test from 'src/components/Dashboard/Views/test.vue'
+import TableList from 'src/components/Dashboard/Views/TableList'
+import prediction from 'src/components/Dashboard/Views/prediction'
+import MyFeedbacks from 'src/components/Dashboard/Views/MyFeedback.vue'
 import IncidentDet from 'src/components/Dashboard/Views/IncidentDet.vue'
 import MyAlerts from 'src/components/Dashboard/Views/MyAlerts.vue'
-import test from 'src/components/Dashboard/Views/test.vue'
-
 const routes = [
   {
     path: '/',
     component: DashboardLayout,
-    redirect: '/maps'
+    redirect: '/home'
   },
   {
     path: '/',
@@ -62,26 +64,20 @@ const routes = [
 
       },
       {
-        path: 'maps/detail/:id',
-        name: 'incident Detail',
-        component: IncidentDet
-
-      },
-      {
-        path: 'myalerts',
-        name: 'my alerts',
-        component: MyAlerts
-
-      },
-      {
         path: 'test',
         name: 'test',
         component: test
       },
       {
         path: 'statistics',
-        name: 'Typography',
-        component: Typography
+        name: 'statistics',
+        component: Statistics
+      },
+      {
+        path: 'feedbacks/myfeedback',
+        name: 'MyFeedback',
+        component: MyFeedbacks
+
       },
       {
         path: 'icons',
@@ -94,15 +90,36 @@ const routes = [
         component: Maps
       },
       {
+        path: 'maps/detail/:id',
+        name: 'incident Detail',
+        component: IncidentDet
+
+      },
+      {
+        path: 'myalerts',
+        name: 'my alerts',
+        component: MyAlerts
+
+      },
+      {
         path: 'notifications',
         name: 'Notifications',
         component: Notifications
+      }, {
+        path: 'TableList',
+        name: 'TableList',
+        component: TableList
+      },
+      {
+        path: 'prediction/p/:id',
+        name: 'prediction',
+        component: prediction
       }
     ]
   },
   { path: '*',
     component: DashboardLayout,
-    redirect: '/maps' }
+    redirect: '/home' }
 ]
 
 /**

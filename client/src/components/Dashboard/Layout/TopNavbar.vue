@@ -23,15 +23,15 @@
           </li>
         </ul>
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
+          <li class="nav-item" v-if="token != null">
             <a class="nav-link" href="#">
               Account
             </a>
           </li>
-          
+
           <li class="nav-item" v-if="token != null">
-              <router-link v-bind:to="{ name: 'Overview' }" ><a  @click="onLogout" class="nav-link">
-                Log out
+            <router-link v-bind:to="{ name: 'Overview' }" ><a  @click="onLogout" class="nav-link">
+              Log out
             </a></router-link>
           </li>
           <li class="nav-item" v-if="token ===null">
@@ -39,18 +39,26 @@
               Login
             </a></router-link>
           </li>
-          <li class="nav-item"  v-if="token != null">
+          <li class="nav-item" v-if="token != null">
             <a href="/#/myalerts" class="nav-link">
               My alerts
             </a>
           </li>
+
+          <li class="nav-item" v-if="token != null">
+            <router-link v-bind:to="{ name: 'MyFeedback' }"><a   class="nav-link">
+              My feedbacks
+            </a></router-link>
+          </li>
+
+
         </ul>
       </div>
     </div>
   </nav>
 </template>
 <script>
-    import axios from 'axios'
+  import axios from 'axios'
 
   export default {
     computed: {
@@ -60,7 +68,7 @@
       }
     },
     data () {
-      return { 
+      return {
         token: localStorage.getItem('token'),
         user: JSON.parse(localStorage.getItem('user')),
         activeNotifications: false
@@ -68,16 +76,18 @@
     },
     methods: {
       onLogout () {
-      const BASE_URL = 'http://localhost:8001'
-      const url = `${BASE_URL}/user/logout`
-      axios.delete(url, {headers: {Authorization: localStorage.getItem('token')}}).then((response) => {
-        localStorage.removeItem('user')
-        localStorage.removeItem('token')
-         this.$router.push('/maps')
-      }).catch(error => {
-        console.log(error)
-      })
-    },
+        const BASE_URL = 'http://localhost:8001'
+        const url = `${BASE_URL}/user/logout`
+        axios.delete(url, {headers: {Authorization: localStorage.getItem('token')}}).then((response) => {
+          localStorage.removeItem('user')
+          localStorage.removeItem('token')
+          this.$router.go({
+            path: 'user'
+          })
+        }).catch(error => {
+          console.log(error)
+        })
+      },
       capitalizeFirstLetter (string) {
         return string.charAt(0).toUpperCase() + string.slice(1)
       },

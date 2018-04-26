@@ -6,7 +6,7 @@
         <i class="nc-icon nc-pin-3"></i>
         <p>Home</p>
       </sidebar-link>
-      <sidebar-link to="/user">
+      <sidebar-link to="/user" v-if="token != null">
         <i class="nc-icon nc-circle-09"></i>
         <p>User Profile</p>
       </sidebar-link>
@@ -14,11 +14,11 @@
         <i class="nc-icon nc-notes"></i>
         <p>Feedbacks</p>
       </sidebar-link>
-      <sidebar-link to="/statistics">
+      <sidebar-link to="/TableList">
         <i class="nc-icon nc-paper-2"></i>
-        <p>Incident history</p>
+        <p>Incident History</p>
       </sidebar-link>
-      
+
       <sidebar-link to="/notifications">
         <i class="nc-icon nc-bell-55"></i>
         <p>Notifications</p>
@@ -50,6 +50,11 @@
       DashboardContent,
       MobileMenu
     },
+    data () {
+      return{
+        token: localStorage.getItem('token'),
+        user: JSON.parse(localStorage.getItem('user')),
+      }},
     methods: {
       toggleSidebar () {
         if (this.$sidebar.showSidebar) {
