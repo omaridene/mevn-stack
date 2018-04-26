@@ -17,7 +17,8 @@ import test from 'src/components/Dashboard/Views/test.vue'
 import TableList from 'src/components/Dashboard/Views/TableList'
 import prediction from 'src/components/Dashboard/Views/prediction'
 import MyFeedbacks from 'src/components/Dashboard/Views/MyFeedback.vue'
-
+import IncidentDet from 'src/components/Dashboard/Views/IncidentDet.vue'
+import MyAlerts from 'src/components/Dashboard/Views/MyAlerts.vue'
 const routes = [
   {
     path: '/',
@@ -87,6 +88,18 @@ const routes = [
         path: 'maps',
         name: 'Maps',
         component: Maps
+      },
+      {
+        path: 'maps/detail/:id',
+        name: 'incident Detail',
+        component: IncidentDet
+
+      },
+      {
+        path: 'myalerts',
+        name: 'my alerts',
+        component: MyAlerts
+
       },
       {
         path: 'notifications',

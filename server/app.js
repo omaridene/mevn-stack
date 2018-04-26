@@ -11,7 +11,8 @@ var feedbacks = require('./routes/feedbacks');
 var incidents = require('./routes/incidents');
 var alerts = require('./routes/show_alerts_with_delgation');
 var User = require('./api/user');
-
+var Incident = require('./api/incident');
+var Delegation = require('./api/delegation');
 var note = require('./routes/note');
 
 var app = express();
@@ -53,7 +54,8 @@ app.use('/index', index);
 app.use('/users', users);
 app.use('/user', User);
 app.use('/note', note);
-
+app.use('/incident', Incident);
+app.use('/delegation', Delegation);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
