@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button class="g-login" ref="googleBtn">Login</button>
+    <button class="g-login" ref="googleBtn" style="background-color:#D5D5D5;"><i class="fa fa-google"></i>Login</button>
   </div>
 </template>
 

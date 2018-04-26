@@ -13,6 +13,7 @@
     "cors": "^2.8.4",
     "debug": "~2.6.9",
     "express": "~4.15.5",
+    "fs": "0.0.1-security",
     "geodist": "^0.2.1",
     "geolocation": "^0.2.0",
     "isomorphic-location": "^0.2.0",

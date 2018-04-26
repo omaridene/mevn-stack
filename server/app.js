@@ -24,7 +24,8 @@ app.use(function(req, res, next) {
 });
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/piStack');
+//mongoose.connect('mongodb://localhost:27017/piStack');
+mongoose.connect('mongodb://ismail:ismail@ds155699.mlab.com:55699/pistack');
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error"));
 db.once("open", function(callback){

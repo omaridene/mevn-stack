@@ -89,7 +89,7 @@ router.get('/nearest', function(req, res) {
         
         lng=loc.longitude
         lat=loc.latitude
-        console.log(lng+"  /  "+lat)
+        // console.log(lng+"  /  "+lat)
         var array = [];
     Incident.find(function (err,incidents) {
         for (let i = 0; i < incidents.length; i++) {
@@ -97,8 +97,8 @@ router.get('/nearest', function(req, res) {
             // console.log(response.data[i].address.coordinates[0])
             // console.log({lat: incidents[i].address.coordinates[0], lng: incidents[i].address.coordinates[1]});
             var dist = geodist({lat: lat, lon: lng,}, {lat: incidents[i].address.coordinates[0], lon: incidents[i].address.coordinates[1]})
-            console.log(dist) 
-            if (dist <= 40) {
+            // console.log(dist) 
+            if (dist <= 60) {
                 inc={
                     _id: incidents[i]._id,
                     Title: incidents[i].Title,
@@ -112,7 +112,7 @@ router.get('/nearest', function(req, res) {
                 array.push(inc);
             }
           }
-          console.log(array.length);
+        //   console.log(array.length);
           res.json(array);
             //console.log(incidents.length);
     })

@@ -5,6 +5,9 @@
         <div class="col-md-12 ">
           <card>
     <h4 slot="header" class="card-title">Login</h4>
+    <hr>
+    <h5 class="table-wrap" style="text-align: center">Sign in with your google account<GoogleLogin client-id="355541983809-imn5j4sg8u5s7eo71r41e0hnln5qhono.apps.googleusercontent.com" v-bind:onsuccess="onSign" v-bind:onerror="onError"></GoogleLogin></h5>
+<hr>
     <form id="loginform" @submit.prevent="onSubmit">
       
 
@@ -41,9 +44,8 @@
     </form>
   </card>
         </div>
-        <GoogleLogin client-id="355541983809-imn5j4sg8u5s7eo71r41e0hnln5qhono.apps.googleusercontent.com" v-bind:onsuccess="onSignIn" v-bind:onerror="onError"></GoogleLogin>
-    <GoogleLogout client-id="355541983809-imn5j4sg8u5s7eo71r41e0hnln5qhono.apps.googleusercontent.com" v-bind:logout="logout">Logout</GoogleLogout>
-                    <GoogleLogin client-id="355541983809-imn5j4sg8u5s7eo71r41e0hnln5qhono.apps.googleusercontent.com" v-bind:onsuccess="onSign" v-bind:onerror="onError"></GoogleLogin>
+        <!-- <GoogleLogin client-id="355541983809-imn5j4sg8u5s7eo71r41e0hnln5qhono.apps.googleusercontent.com" v-bind:onsuccess="onSignIn" v-bind:onerror="onError"></GoogleLogin>
+    <GoogleLogout client-id="355541983809-imn5j4sg8u5s7eo71r41e0hnln5qhono.apps.googleusercontent.com" v-bind:logout="logout">Logout</GoogleLogout> -->
 
       </div>
 
@@ -117,6 +119,7 @@ import GoogleLogout from './google-logout/google-logout'
         //    this.$router.push('/')
         // })
         .catch(error => {
+          this.onSignIn(googleUser)
           console.log(error)
         })
     },
@@ -141,7 +144,7 @@ import GoogleLogout from './google-logout/google-logout'
         
     })
         .then(response => {
-          
+          this.onSign(googleUser)
            this.$router.go({
           path: '/maps'
         })

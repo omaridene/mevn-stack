@@ -1,6 +1,8 @@
 <template>
 <div class="content">
     <div class="container-fluid">
+      <h2 class="table-wrap">Incident detail</h2>
+      <hr>
         <div class="row">
             <div class="col-md-8">
                 <gmap-map
@@ -27,7 +29,7 @@
                 <p class="card-category">{{date}}</p>
                 </template>
                 <div class="typo-line">
-                <h3><p class="category">DESCRIPTION</p>{{description}}</h3>
+                <p class="category">DESCRIPTION</p>{{description}}
                 </div>
                 <div class="typo-line">
                 <h6><p class="category">Place</p>{{place}}</h6>
@@ -50,6 +52,7 @@
   import {API_KEY} from './Maps/API_KEY'
   import Vue from 'vue'
   import * as VueGoogleMaps from 'vue2-google-maps'
+  import LTable from 'src/components/UIComponents/Table.vue'
 
 
   Vue.use(VueGoogleMaps, {
@@ -59,7 +62,8 @@
   })
   export default {
       components: {
-      Card
+      Card,
+      LTable
     },
     data () {
       return {

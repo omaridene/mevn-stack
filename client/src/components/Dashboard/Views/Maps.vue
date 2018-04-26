@@ -1,17 +1,18 @@
 <template>
 <div class="content">
   <div class="container-fluid">
+    <h2 class="table-wrap">Heatmap</h2>
+    <hr>
     <div class="row">
-      {{token}}
         <div class="col-md-7">
           <!-- <vue-google-heatmap :points="points" /> -->
           <!-- :width="600" :height="600" -->
           <gmap-map
                     id="map"
                     :center="center"
-                    :zoom="8"
+                    :zoom="13"
                     :options="options"
-                    style="height: 800px"
+                    style="height: 1000px"
                     map-type-id="roadmap"
                 >
                     <gmap-marker
@@ -38,11 +39,43 @@
               <p class="category">Incidents near to that place</p>
             </template> -->
               
-<div class="search-wrapper">
-    <input type="text" v-model="search" placeholder="Search title.."/>
-        <label>Search title:</label>
+
+  <div class="feedbacks">
+    <div class="search-wrapper">
+        <input type="text" style="width:45%" v-model="search" placeholder="Search title.."/>
+        <select v-model="selected" placeholder="Type" style="width:50%">
+        <option value="" disabled selected>Type alert</option>
+        <option >accident</option>
+        <option >Braquage</option>
+        <option></option>
+      </select>
   </div>
-          <table>
+  <hr>
+  <input type="date" style="width:45%" v-model="mydate" /> <input type="date" style="width:45%" v-model="mydate2" />
+  <hr>
+  <h5 class="table-wrap">Nearest alerts to your position 
+    <!-- <toggle-button :value="false" @change="updateValue"/>  -->
+  </h5>
+  <div>
+    <vue-slider ref="slider" v-model="value"></vue-slider>
+  </div>  
+  <hr>
+                <div v-if="incidents.length > 0">
+                  <card v-for="i in filteredList" style="height:135px">
+                            <template slot="header">
+                            <h4 class="card-title"><router-link v-bind:to="{ name: 'incident Detail', params: { id: i._id } }">{{i.Title}} </router-link> <i class="fa fa-arrows-h"></i> {{i.distance}} </h4>
+                            <p class="card-category">{{i.date}}</p>
+                            </template>
+                            <div class="typo-line">
+                          <p class="category">Description :</p>
+                          <p class="text-muted">
+                              {{i.Description}}
+                          </p>
+                        </div>     
+                  </card>
+    </div>
+  </div>
+          <!-- <table>
             <tr>
               <td> nearest alerts to your</td>
               <td>current position</td>
@@ -57,7 +90,7 @@
               <td>{{ i.Description }}</td>
               <td>{{ i.distance }} km</td>
             </tr>
-          </table>
+          </table> -->
                
               
             <!-- <div class="footer">
@@ -104,6 +137,8 @@ import VueGoogleHeatmapVue from 'vue-google-heatmap/src/VueGoogleHeatmap.vue'
 import IncidentsService from '@/services/IncidentsService'
 import {API_KEY} from './Maps/API_KEY'
 import * as VueGoogleMaps from 'vue2-google-maps'
+import vueSlider from 'vue-slider-component'
+
 
   Vue.use(VueGoogleMaps, {
     load: {
@@ -118,10 +153,14 @@ export default {
       Card,
       LTable,
       ChartCard,
-      StatsCard
+      StatsCard,
+      vueSlider
     },
   data () {
     return {
+      mydate: '',
+      mydate2: new Date(),
+      value: 0,
       tab : false,
       points: [
         // {lat: response.data[i].address.coordinates[0], lng: response.data[i].address.coordinates[1]}
@@ -130,6 +169,7 @@ export default {
       ],
       
         incidents: [],
+        selected: '',
          search: '',
         token: localStorage.getItem("token"),
         id : '',
@@ -192,10 +232,33 @@ export default {
               return this.incidents.slice(0).sort((a, b) => a.distance > b.distance ? this.sorting : -this.sorting )
             },
             filteredList() {
-        return this.incidents.filter(post => {
-        return post.Title.toLowerCase().includes(this.search.toLowerCase())
-      })
-    }
+             
+                
+              
+                if (this.selected != '') {
+                return this.incidents.filter(post => {
+                return post.type.toLowerCase().includes(this.selected.toLowerCase())
+                })
+              }
+              if (this.search != '') {
+                return this.incidents.filter(post => {
+                return post.Title.toLowerCase().includes(this.search.toLowerCase())
+                })
+              } 
+              if (this.value >= 1) {
+                return this.incidents.filter(post => {
+                return post.distance<this.value
+                })
+              } 
+              if (this.mydate !='' && this.mydate2 != '') {
+                return this.incidents.filter(post => {
+                return post.date<this.mydate2 && post.date>this.mydate
+                })
+              } 
+              return this.incidents.filter(post => {
+                return post.type.toLowerCase().includes(this.selected.toLowerCase())
+                })
+            }
         },
   methods: {
     cente (l,id) {
