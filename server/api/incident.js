@@ -6,8 +6,11 @@ var Incident = require('./../models/incident');
 var Delegation = require('./../models/delegation');
 var NodeGeocoder = require('node-geocoder');
 var geodist = require('geodist');
+var geolib = require('geolib');
 var geolocation = require('geolocation');
 const location = require('@derhuerst/location');
+var distance = require('google-distance');
+
 
 var options = {
   provider: 'google',
@@ -93,12 +96,20 @@ router.get('/nearest', function(req, res) {
         var array = [];
     Incident.find(function (err,incidents) {
         for (let i = 0; i < incidents.length; i++) {
+            if (incidents[i].address.coordinates[0] != undefined) {
+                
+            
             // console.log(lat+"  /  "+lng)
             // console.log(response.data[i].address.coordinates[0])
-            // console.log({lat: incidents[i].address.coordinates[0], lng: incidents[i].address.coordinates[1]});
-            var dist = geodist({lat: lat, lon: lng,}, {lat: incidents[i].address.coordinates[0], lon: incidents[i].address.coordinates[1]})
-            // console.log(dist) 
-            if (dist <= 60) {
+            console.log({lat: incidents[i].address.coordinates[0], lng: incidents[i].address.coordinates[1]});
+            //var dist = geodist({lat: lat, lon: lng}, {lat: incidents[i].address.coordinates[0], lon: incidents[i].address.coordinates[1]})
+            //var dist = geolib.getDistance({latitude: lat, longitude: lng}, {latitude: incidents[i].address.coordinates[0], longitude: incidents[i].address.coordinates[1]})
+            var dist = geolib.getDistance(
+                {latitude: lat, longitude: lng},
+                {latitude: incidents[i].address.coordinates[0], longitude: incidents[i].address.coordinates[1]}
+            );
+            console.log(dist);
+            if (dist <= 60000) {
                 inc={
                     _id: incidents[i]._id,
                     Title: incidents[i].Title,
@@ -107,14 +118,16 @@ router.get('/nearest', function(req, res) {
                     lat: incidents[i].address.coordinates[0],
                     type: incidents[i].type,
                     date: incidents[i].Date,
-                    distance: dist
+                    distance: dist/1000
                 }
                 array.push(inc);
             }
-          }
+        }
+    }
         //   console.log(array.length);
           res.json(array);
             //console.log(incidents.length);
+        
     })
     }
     })

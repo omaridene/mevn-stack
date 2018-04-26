@@ -42,16 +42,20 @@
 
   <div class="feedbacks">
     <div class="search-wrapper">
+      <h5 class="table-wrap">Search by title or type<br>
         <input type="text" style="width:45%" v-model="search" placeholder="Search title.."/>
-        <select v-model="selected" placeholder="Type" style="width:50%">
+        <select v-model="selected" placeholder="Type" style="width:45%">
         <option value="" disabled selected>Type alert</option>
         <option >accident</option>
         <option >Braquage</option>
         <option></option>
       </select>
+      </h5>
   </div>
   <hr>
+  <h5 class="table-wrap">Search by Date<br>
   <input type="date" style="width:45%" v-model="mydate" /> <input type="date" style="width:45%" v-model="mydate2" />
+  </h5>
   <hr>
   <h5 class="table-wrap">Nearest alerts to your position 
     <!-- <toggle-button :value="false" @change="updateValue"/>  -->
