@@ -2,7 +2,6 @@
   <div class="feedback">
     <div class="form">
       <h1>Add Feedback</h1>
-      <p>Thumbs-up icon: <span class="glyphicon glyphicon-thumbs-up"></span></p>
 
       <p v-if="errors.length">
         <b>Please correct the following error(s):</b>

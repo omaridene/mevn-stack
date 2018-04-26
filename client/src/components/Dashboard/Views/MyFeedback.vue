@@ -74,7 +74,7 @@
         user: JSON.parse(localStorage.getItem('user')),
         status: "disabled",
         enabledClass:'alert alert-info',
-        disabledClass:'alert alert-danger',
+        disabledClass:'alert alert-dark',
       }
     },
     mounted() {

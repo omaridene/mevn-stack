@@ -43,5 +43,8 @@ getCommentFromFeedback (idComment, idFeedback) {
   } ,
   getAllReportedFeedbacksByUser (idU) {
     return Api().get('getAllreports/'+idU)
+  },
+  searchFeedbackByTag (tag) {
+    return Api().get('searchFeedback/'+tag)
   }
 }

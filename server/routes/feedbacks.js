@@ -66,6 +66,17 @@ router.get('/getAllreports/:idU', (req, res) => {
 })
 
 
+// Search feedbacks
+router.get('/searchFeedback/:tag', (req, res) => {
+    Feedback.find({'title':new RegExp(req.params.tag,"i")}, function (error, feedbacks){
+    if (error) { console.error(error); }
+    res.send({
+        feedback: feedbacks
+    })
+}).populate('user')
+})
+
+
 
 
 // report feedback
