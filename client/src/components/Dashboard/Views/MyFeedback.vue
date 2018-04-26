@@ -1,6 +1,7 @@
 <template>
   <div class="feedbacks">
     <div style="display: flex;flex-wrap: wrap;align-items: center;justify-content: center;margin-top:30px ">
+      <img src="../../../../static/img/myfeedback.jpg">
     </div>
     <div v-if="feedbacks.length > 0" class="table-wrap">
       <div style="display: flex;flex-wrap: wrap;align-items: center;justify-content: center;margin-top:30px ">
@@ -17,7 +18,7 @@
         <tr v-for="feedback in feedbacks" v-if="user._id === feedback.user._id" >
 
           <td v-bind:class="[feedback.status === status ? disabledClass :  enabledClass]" >
-            <router-link v-bind:to="{ name: 'Feedback Detail', params: { id: feedback._id } }">{{feedback.title}}
+            <router-link style="color: white" v-bind:to="{ name: 'Feedback Detail', params: { id: feedback._id } }">{{feedback.title}}
             </router-link>
           </td>
           <td v-bind:class="[feedback.status === status ? disabledClass :  enabledClass]">{{ feedback.description }}</td>
@@ -57,6 +58,8 @@
   import LTable from 'src/components/UIComponents/Table.vue'
   import Checkbox from 'src/components/UIComponents/Inputs/Checkbox.vue'
 
+
+
   export default {
     components: {
       StatsCard
@@ -71,7 +74,7 @@
         user: JSON.parse(localStorage.getItem('user')),
         status: "disabled",
         enabledClass:'alert alert-info',
-        disabledClass:'alert alert-danger',
+        disabledClass:'alert alert-dark',
       }
     },
     mounted() {

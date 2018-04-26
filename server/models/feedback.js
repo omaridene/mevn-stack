@@ -3,7 +3,6 @@ var Schema = mongoose.Schema;
 var Incident = require('./incident')
 var User = require('./user')
 
-
 var addressSchema = new mongoose.Schema({
     place:{
         type: String
@@ -26,7 +25,7 @@ var IncidentSchema = new mongoose.Schema({
     address: addressSchema,
     type:{
         type: String
-    }
+    },
 
     // createdBy:{type:mongoose.Schema.Types.ObjectId,ref:'User'},
 });
@@ -50,9 +49,11 @@ var FeedbackSchema = new Schema({
     date:{type:Date,default:Date.now},
     comments : [commentSchema],
     incident : IncidentSchema,
-    degree : Number,
     user:{type:mongoose.Schema.Types.ObjectId,ref:'User'},
-    status : {type:String,default:'enabled'}
+    status : {type:String,default:'enabled'},
+    degree : Number,
+    reports :{type:Number,default:0}
+
 });
 
 var Feedback = mongoose.model("Feedback", FeedbackSchema);

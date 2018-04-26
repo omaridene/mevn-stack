@@ -1,22 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bb21d3ce-60ac-4b47-8327-34c21766c867" name="Default" comment="commit by ismail">
-      <change beforePath="" afterPath="$PROJECT_DIR$/../client/src/components/Dashboard/Views/MyFeedback.vue" />
-      <change beforePath="$PROJECT_DIR$/../client/src/components/Dashboard/Views/FeedBackDetail.vue" afterPath="$PROJECT_DIR$/../client/src/components/Dashboard/Views/FeedBackDetail.vue" />
-      <change beforePath="$PROJECT_DIR$/../client/src/components/Dashboard/Views/Feedbacks.vue" afterPath="$PROJECT_DIR$/../client/src/components/Dashboard/Views/Feedbacks.vue" />
-      <change beforePath="$PROJECT_DIR$/../client/src/components/Dashboard/Views/Maps/API_KEY.js" afterPath="$PROJECT_DIR$/../client/src/components/Dashboard/Views/Maps/API_KEY.js" />
-      <change beforePath="$PROJECT_DIR$/../client/src/components/Dashboard/Views/Statistics.vue" afterPath="$PROJECT_DIR$/../client/src/components/Dashboard/Views/Statistics.vue" />
-      <change beforePath="$PROJECT_DIR$/../client/src/components/Dashboard/Views/prediction.vue" afterPath="$PROJECT_DIR$/../client/src/components/Dashboard/Views/prediction.vue" />
-      <change beforePath="$PROJECT_DIR$/../client/src/routes/routes.js" afterPath="$PROJECT_DIR$/../client/src/routes/routes.js" />
-      <change beforePath="$PROJECT_DIR$/../client/src/services/FeedbacksService.js" afterPath="$PROJECT_DIR$/../client/src/services/FeedbacksService.js" />
-      <change beforePath="$PROJECT_DIR$/../client/src/services/IncidentsService.js" afterPath="$PROJECT_DIR$/../client/src/services/IncidentsService.js" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
-      <change beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
-      <change beforePath="$PROJECT_DIR$/routes/feedbacks.js" afterPath="$PROJECT_DIR$/routes/feedbacks.js" />
-      <change beforePath="$PROJECT_DIR$/routes/incidents.js" afterPath="$PROJECT_DIR$/routes/incidents.js" />
-    </list>
+    <list default="true" id="bb21d3ce-60ac-4b47-8327-34c21766c867" name="Default" comment="integration node 1 by ismail" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -105,8 +90,8 @@
       <file leaf-file-name="incidents.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routes/incidents.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="163">
-              <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+            <state relative-caret-position="197">
+              <caret line="26" column="0" lean-forward="true" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -297,7 +282,7 @@
       <workItem from="1523987081335" duration="8806000" />
       <workItem from="1524159701741" duration="5623000" />
       <workItem from="1524502978915" duration="1231000" />
-      <workItem from="1524685705661" duration="4694000" />
+      <workItem from="1524685705661" duration="4769000" />
     </task>
     <task id="LOCAL-00001" summary="commit by ismail">
       <created>1522688760736</created>
@@ -310,7 +295,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="72263000" />
+    <option name="totallyTimeSpent" value="72338000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -324,7 +309,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12648809" sideWeight="0.5086849" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.45588234" sideWeight="0.49702382" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.45588234" sideWeight="0.49702382" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12648809" sideWeight="0.5086849" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -739,8 +724,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/incidents.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="163">
-          <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+        <state relative-caret-position="197">
+          <caret line="26" column="0" lean-forward="true" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
           <folding />
         </state>
       </provider>
