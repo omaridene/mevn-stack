@@ -52,7 +52,7 @@
                     
                 </gmap-map>
             </div>
-            
+            id : {{id}}
         </div></div></div>
 </template>
 
@@ -82,7 +82,7 @@ export default {
       //         },
       incidents: [],
 
-      id: "",
+      id: localStorage.getItem("id"),
       center: {
         lat: 36.9,
         lng: 10.186
@@ -162,9 +162,9 @@ export default {
   },
   methods: {
     async getMyIncidents() {
-      console.log(localStorage.getItem("userId"));
-      this.id = localStorage.getItem("userId");
-      const response = await IncidentsService.fetchByUser({ id: this.id });
+      //console.log(localStorage.getItem("userId"));
+      // this.id = localStorage.getItem("id");
+      const response = await IncidentsService.fetchByUser({id:this.id})
       this.incidents = response.data;
       console.log(response.data);
     },

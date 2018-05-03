@@ -5,7 +5,7 @@
 
     <div class='chart'>
       <table align="right" style="z-index: 100;position: relative" >
-        <tr v-if="verifnote"><div class="alert alert-info"><span>are you agree with this predictions :</span></div>
+        <tr v-if="verifnote"><div class="alert alert-info"><span>Do you agree with this predictions :</span></div>
         </tr>
         <tr align="left" v-if="verifnote">
           <td class="btn-round">yes : <input type="radio" name="note" value="1" v-model="note" class="btn-round">
@@ -123,7 +123,7 @@
         nbrnotes : 0 ,
         nbrnotesf : 0,
         valid: false,
-        mounth: 0,
+        mounth: 3,
         verifnote : true ,
         lineChart: {
           data: {
@@ -188,7 +188,8 @@ this.getnotes()
     ,
     mounted() {
       this.loadcharpie(),
-        this.getnotes()
+        this.getnotes(),
+        this.onloade()
     },
     methods: {
       notifyVue(verticalAlign, horizontalAlign) {
@@ -242,6 +243,7 @@ this.getnotes()
             this.alerts.filter((a) => new Date(a.Date).getHours() > 3 && a.type === "crime" && new Date(a.Date).getHours() < 6).length,
             this.alerts.filter((a) => new Date(a.Date).getHours() > 6 && a.type === "crime" && new Date(a.Date).getHours() < 9).length
           ]]
+          console.log(this.lineChart.data.series)
       },
 
       async loadcharpie() {
@@ -250,15 +252,15 @@ this.getnotes()
         this.chartData = [
           {
             label: 'braquage',
-            value: response.data.feedbacks.filter((a) => a.degree > 2 && a.incident.type === "braquage" && a.incident.address.place===this.$route.params.id ).length
+            value: response.data.feedbacks.filter((a) => a.degree > 0 && a.incident.type === "braquage" && a.incident.address.place===this.$route.params.id ).length
           },
           {
             label: 'accedints',
-            value: response.data.feedbacks.filter((a) => a.degree > 2 && a.incident.type === "accident" && a.incident.address.place===this.$route.params.id).length
+            value: response.data.feedbacks.filter((a) => a.degree > 0 && a.incident.type === "accident" && a.incident.address.place===this.$route.params.id).length
           },
           {
             label: 'crime',
-            value: response.data.feedbacks.filter((a) => a.degree > 2 && a.incident.type === "crime" && a.incident.address.place===this.$route.params.id).length
+            value: response.data.feedbacks.filter((a) => a.degree > 0 && a.incident.type === "crime" && a.incident.address.place===this.$route.params.id).length
           }
 
         ]

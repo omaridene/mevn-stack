@@ -105,6 +105,7 @@ import GoogleLogout from './google-logout/google-logout'
         .then(response => {
           //console.log(response.data.tokens[response.data.tokens.length - 1].token)
             localStorage.setItem('user', JSON.stringify(response.data))
+            localStorage.setItem('id', response.data._id)
             console.log(response.data)
           // localStorage.setItem('token', response.data.tokens[data.tokens.length - 1].token)
            localStorage.setItem('token',response.data.tokens[response.data.tokens.length - 1].token)
@@ -183,6 +184,7 @@ import GoogleLogout from './google-logout/google-logout'
         .then(response => {
           //console.log(response.data.tokens[response.data.tokens.length - 1].token)
             localStorage.setItem('user', JSON.stringify(response.data))
+            
           // localStorage.setItem('token', response.data.tokens[data.tokens.length - 1].token)
            localStorage.setItem('token',response.data.tokens[response.data.tokens.length - 1].token)
            this.$router.go({

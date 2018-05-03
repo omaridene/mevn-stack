@@ -29,7 +29,8 @@ export default {
     return Api().get('incident/current/' + params.id)
   },
   fetchByUser (params) {
-    return Api().get('incident/own/' + params.id)
+    console.log("id for pass"+params.id)
+    return Api().get('incident/own/'+params.id)
   },
   deleteAlertById (id) {
     return Api().delete('incident/delete/' + id)

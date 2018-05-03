@@ -254,7 +254,7 @@ router.get('/feedback/:idF/deleteComment/:idC', (req, res) => {
 // Get a comment from feedbacl
 router.get('/feedback/:idF/getComment/:idC', (req, res) => {
     Feedback.findOne({'_id': req.params.idF}, function (err, feedback) {
-    var comment=feedback.comments.id(req.params.idC).populate('user');
+    var comment=feedback.comments.id(req.params.idC);
     res.send({
         comment: comment
     })

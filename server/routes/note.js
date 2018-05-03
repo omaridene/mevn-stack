@@ -9,17 +9,17 @@ router.post('/', (req, res) => {
     var delegation = req.body.delegation
     var user = req.body.user
     console.log(req.body)
-    Note = new Note({
+    note = new Note({
         delegation: delegation,
         user : user ,
         status : req.body.status
     })
 
-      Note.save(function (error) {
+      note.save(function (error) {
         if (error) {
             console.log(error)
         }
-        res.send({  Note
+        res.send({  note
         })
     })
 })

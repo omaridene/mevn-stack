@@ -295,8 +295,8 @@
           }
 
       }
-      $this.comments = []
-      $this.getComments()
+         $this.comments = []
+        $this.getComments()
 
     });
   }

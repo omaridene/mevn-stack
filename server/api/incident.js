@@ -66,9 +66,10 @@ Incident.remove({
 })
 });
  router.get('/own/:userID', function (req, res, next) {
+     console.log(req.params.userID)
         Incident
             .find({createdBy:req.params.userID})
-            .populate('user','_id')
+            .populate('User','_id')
             .exec(function (err, incidents) {
                 if (err) {
                     res.send(err)
@@ -109,7 +110,7 @@ router.get('/nearest', function(req, res) {
                 {latitude: incidents[i].address.coordinates[0], longitude: incidents[i].address.coordinates[1]}
             );
             console.log(dist);
-            if (dist <= 60000) {
+            if (dist <= 80000) {
                 inc={
                     _id: incidents[i]._id,
                     Title: incidents[i].Title,
