@@ -9,7 +9,11 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var feedbacks = require('./routes/feedbacks');
 var incidents = require('./routes/incidents');
-
+var alerts = require('./routes/show_alerts_with_delgation');
+var User = require('./api/user');
+var Incident = require('./api/incident');
+var Delegation = require('./api/delegation');
+var note = require('./routes/note');
 
 var app = express();
 const cors = require('cors')
@@ -18,7 +22,7 @@ const morgan = require('morgan')
 
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/piStack');
+mongoose.connect('mongodb://ismail:ismail@ds155699.mlab.com:55699/pistack');
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error"));
 db.once("open", function(callback){
@@ -43,10 +47,15 @@ app.use(bodyParser.json())
 app.use(cors())
 
 app.use('/', feedbacks);
+app.use('/alerts', alerts);
+
 app.use('/incidents', incidents);
 app.use('/index', index);
 app.use('/users', users);
-
+app.use('/user', User);
+app.use('/note', note);
+app.use('/incident', Incident);
+app.use('/delegation', Delegation);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,6 +1,5 @@
 
 var mongoose = require('mongoose');
-//var user = require('./../models/user');
 
 var addressSchema = new mongoose.Schema({
     place:{
@@ -26,6 +25,6 @@ var IncidentSchema = new mongoose.Schema({
         type: String, required: true, minlength: 1, trim: true
     }
 
-   //,createdBy:{type:mongoose.Schema.Types.ObjectId,ref:'User'},
+   ,createdBy:{type:mongoose.Schema.Types.ObjectId,ref:'User'},
 });
 module.exports= mongoose.model('Incident',IncidentSchema);
